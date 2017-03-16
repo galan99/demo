@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>乐逗游戏招聘</title>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
+<link rel="stylesheet" href="css/swiper.min.css">
+<link rel="stylesheet" href="css/animate.min.css">
+<script src="src/swiper.min.js"></script>
+<script src="src/swiper.animate.min.js"></script>
+<script src="src/wx.js"></script>
+<script src="src/zepto.js"></script>
+<style>
+    *{margin:0;padding:0;}
+    html,body{height:100%;}
+    body{font-family:"microsoft yahei";width:7.5rem;margin:0 auto;background:#ede9e1;overflow-x:hidden;}
+    .swiper-container{width:100%;height: 100%;background:#fff;}  
+    .swiper-slide{width:100%;height:100%;background:#ede9e1 url("upload/bg.jpg") no-repeat center bottom;background-size:100% auto;}
+    img{display:block;border:none;}
+    .swiper-pagination-bullet{width:6px;height:6px;background:#fff;opacity:.4;}
+    .swiper-pagination-bullet-active{opacity:1;}
+    .ani,.txt{position:absolute;}
+    
+    .in1,.in2{background:rgba(255,255,255,.7);width:6.1rem;color:#19264a;font-size:.34rem;margin-left:-3.05rem;left:50%;top:3.25rem; z-index:10;}
+
+    .in2{top:5.5rem;}
+    .ibox{display:-webkit-box;display:box;padding:.25rem .4rem; line-height:.34rem;border:1px solid #f9b9b9;margin-top:-1px;}
+    .ibox input{vertical-align:middle;-webkit-box-flex:1;box-flex:1;display:block;resize:none;outline:0;-webkit-appearance:none;white-space:pre-wrap;word-wrap: break-word;background:none;border:none;padding:0 .08rem;font-size:.34rem;-webkit-tap-highlight-color:transparent;}
+    .ibox p{vertical-align:middle;display:inline-block;font-size:.34rem;margin-top:2px;}
+    .btn{width:6.5rem;height:1rem;background:url(upload/b5-btn.png) no-repeat center bottom;background-size:100% auto;position:absolute;margin-left:-3.25rem;left:50%;bottom:.95rem;z-index:20;}
+    @-webkit-keyframes tipmove{0%{bottom:20px;opacity:.7}90%{bottom:0;opacity:0}100%{bottom:20px;opacity:.7}}
+    #array{position:absolute;z-index:999;-webkit-animation: tipmove 1.5s infinite ease-in-out;}
+    .swiper-slide-active .tag1{-webkit-animation: tagmove 4s 1s infinite ease-in-out,showtag .5s .8s 1;position:absolute;opacity:0}
+    .swiper-slide-active .tag2{-webkit-animation: tagmove2 4s 1s infinite ease-in-out,showtag .5s .8s 1;position:absolute;opacity:0;-webkit-transform:translateY(30px);}
+    @-webkit-keyframes tagmove{0%{-webkit-transform:translateY(0px);opacity:1}50%{-webkit-transform:translateY(30px)}100%{-webkit-transform:translateY(0);opacity:1}}
+    @-webkit-keyframes tagmove2{0%{-webkit-transform:translateY(30px);opacity:1}50%{-webkit-transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(30px);opacity:1}}
+	@-webkit-keyframes showtag{0%{opacity:0}100%{opacity:1}}
+	//.pm_1{-webkit-animation: pm_1 6s .5s infinite ease-in-out;position:absolute;}
+	//.pm_2{-webkit-animation: pm_2 6s 2.5s infinite ease-in-out;position:absolute;}
+	//.pm_3{-webkit-animation: pm_3 6s 4s infinite ease-in-out;position:absolute;}
+	// @-webkit-keyframes pm_1{0%{-webkit-transform:translate(-40px, -150px) rotate(-90deg); }100%{-webkit-transform: translate(50px, 650px) rotate(90deg);}}
+	// @-webkit-keyframes pm_2{0%{-webkit-transform:translate(40px, -150px) rotate(90deg); }100%{-webkit-transform: translate(-300px, 350px) rotate(-90deg);}}
+	// @-webkit-keyframes pm_3{0%{-webkit-transform:translate(0, 0) rotate(90deg); }100%{-webkit-transform: translate(-100px, 550px) rotate(-90deg);}}
+    .zz{display:none;position:fixed;left:0;top:0;right:0;bottom:0;background: rgba(0,0,0,.5);z-index:9999;}
+    .zz>p{position:absolute;left:0;top:35%;width:100%;text-align:center;color:#fff;}
+    .loading{width:30px;height:30px;border:1px #fff solid;border-radius:50%;-webkit-animation: rotation 1s ease-in-out infinite;animation: rotation 1s ease-in-out infinite;margin:130px auto;}
+    .loading:after{width:5px;height:5px;background-color:rgba(255,255,255,1);border-radius:100%;position:absolute;content: "";}
+    @-webkit-keyframes rotation{0%{-webkit-transform: rotate(0deg);}100%{-webkit-transform: rotate(360deg);}}
+    @keyframes rotation{0%{transform: rotate(0deg);}100%{transform: rotate(360deg);}}
+    @-webkit-keyframes tips{from {-webkit-transform:translateY(-100%);opacity:0}to { -webkit-transform:translateY(0%);opacity:1;}}
+    @keyframes tips{from{-webkit-transform:translateY(-100%);opacity:0}to{ -webkit-transform:translateY(0%);opacity:1;}}
+    @-webkit-keyframes tipsHide{from{-webkit-transform:translateY(0%);opacity:1}to{-webkit-transform:translateY(-100%);opacity:0;}}
+    @keyframes tipsHide{from{-webkit-transform:translateY(0%);opacity:1}to{-webkit-transform:translateY(-100%);opacity:0;}}
+    .cm-ts{-webkit-transition-duration:500ms;transition-duration:500ms;}
+    @-webkit-keyframes scaleShow{0%{-webkit-transform:scale(0);}100%{-webkit-transform:scale(1);}}
+    @keyframes scaleShow{0%{transform:scale(0);}100%{transform:scale(1);}}
+    .showscale{transform:scale(0);-webkit-transform:scale(0);}
+	.swiper-slide-active .showscale{-webkit-animation:scaleShow .5s .7s ease-in-out forwards;animation:scaleShow .5s .7s ease-in-out forwards;}
+    .msg-tx{min-width:150px;padding:5px 20px;margin:0 auto;border-radius:5px;box-shadow:0 1px 2px rgba(0,0,0,.8);background:rgba(0,0,0,.8);font-size:14px;line-height:30px;}
+    .cmTips{position:fixed;left:0;right:0;top:10px;z-index:99;padding:20px 20px 5px;text-align:center;z-index:99999;color:#fff;overflow:hidden;display:-webkit-box;display:box;-webkit-transform:translateY(-100%);transform:translateY(-100%);-webkit-transition-delay:1s;transition-delay: 1s;-webkit-transition-duration:.5s;transition-duration:.5s;}
+    .show.cmTips{-webkit-animation:tips .5s linear both,tipsHide .5s 3s linear forwards;animation:tips .5s linear both,tipsHide .5s 3s linear forwards;}
+    @-webkit-keyframes ball-scale-ripple{0%{-webkit-transform:scale(0.1);transform:scale(0.1);opacity:1;}
+      70%{-webkit-transform:scale(1);transform:scale(1);opacity:0.7;}100%{opacity:0.0;}}
+    @keyframes ball-scale-ripple{0%{-webkit-transform:scale(0.1);transform:scale(0.1);opacity:1;}
+      70%{-webkit-transform:scale(1);transform:scale(1);opacity:0.7;}100%{opacity:0.0;}}
+    .ball-scale-ripple > div{-webkit-animation-fill-mode:both;animation-fill-mode:both;height:.6rem;width:.6rem;border-radius:100%;
+      border:2px solid #fff;-webkit-animation:ball-scale-ripple 1s 0s infinite cubic-bezier(.21, .53, .56, .8);animation:ball-scale-ripple 1s 0s infinite cubic-bezier(.21, .53, .56, .8);position:absolute;top:50%;left:50%;margin:-.3rem 0 0 -.3rem;}
+    .loader-inner{position:fixed;width:100%;height:100%;background:#ed5565;left:0;top:0;z-index:1000;}
+    @-webkit-keyframes rotating{from{-webkit-transform:rotate(0)}to{-webkit-transform:rotate(360deg)}}
+    @keyframes rotating{from{transform:rotate(0)}to{transform: rotate(360deg)}}
+    .play{-webkit-animation:rotating 1.2s linear infinite;animation: rotating 1.2s linear infinite;}
+    .mp3{width:.7rem;height:.7rem;background:url(upload/play.png) no-repeat center;background-size:100% auto;position:absolute;right:.45rem;top:.45rem;z-index:50;}
+</style>
+<script type="text/javascript">
+    var devieWidth=Math.min(750,document.documentElement.clientWidth);
+    document.documentElement.style.fontSize=devieWidth/7.5+'px';
+</script>
+</head>
+
+<body>
+<div class="loader-inner ball-scale-ripple">
+  <div></div>
+</div>
+<section class="zz" id="loading">
+  <div class="loading"></div>
+</section>
+<div class="swiper-container" id="content" style="display:none;">
+    <div class="swiper-wrapper">
+        <section class="swiper-slide page1">
+		  <img src="upload/b1-t1-2.png" class="ani resize" style="width:1.29rem;height:5.35rem;left:2.34rem;top:1.2rem;z-index:3;" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.4s" swiper-animate-delay=".2s" >
+		  <img src="upload/b1-t1-1.png" class="ani resize" style="width:1.5rem;height:5.78rem;right:2.34rem;top:1.78rem;z-index:3;" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.4s" swiper-animate-delay=".5s" >
+          <img src="upload/b1-t2.png" class="ani resize" style="width:5.13rem;height:2.13rem;left:1.1rem;top:8rem;z-index:3;" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay=".5s" >
+          <img src="upload/log1.png" class="ani resize" style="width:1.89rem;height:.75rem;right:1.45rem;top:10.32rem;z-index:4;" swiper-animate-effect="fadeIn" swiper-animate-duration="0.5s" swiper-animate-delay="1s"  >
+          <img src="upload/log2.png" class="ani resize" style="width:2.42rem;height:.34rem;left:1rem;top:10.54rem;z-index:3;" swiper-animate-effect="fadeIn" swiper-animate-duration="0.5s" swiper-animate-delay="1s"  > 
+          <img src="upload/iphone.png" class="resize tag1" style="width:1.86rem;height:1.86rem;left:.66rem;top:4.54rem;z-index:3;" swiper-animate-effect="fadeIn" swiper-animate-duration="0.5s" swiper-animate-delay="1s">    
+          <img src="upload/money.png" class="resize tag2" style="width:1.9rem;height:1.86rem;right:.6rem;top:3.54rem;z-index:3;">
+        </section>   
+        <section class="swiper-slide page2">
+          <img src="upload/b2-t1.png" class="ani resize" style="width:4.25rem;height:2.15rem;left:1.67rem;top:1.5rem;z-index:3;" swiper-animate-effect="fadeInDown" swiper-animate-duration="0.5s" swiper-animate-delay=".2s"  >
+          <img src="upload/b2-t2.png" class="ani resize" style="width:4.07rem;height:0.95rem;left:1.77rem;top:3.88rem;z-index:3;" swiper-animate-effect="fadeInLeft" swiper-animate-duration="0.6s" swiper-animate-delay=".5s"  >
+          <img src="upload/b2-t4.png" class="ani resize" style="width:2.77rem;height:3.7rem;left:.5rem;top:5.5rem;z-index:4;" swiper-animate-effect="fadeInLeft" swiper-animate-duration="0.7s" swiper-animate-delay=".8s"  >
+          <img src="upload/b2-t5" class="ani resize" style="width:3.12rem;height:3.2rem;right:.5rem;top:5.8rem;z-index:3;" swiper-animate-effect="fadeInRight" swiper-animate-duration="0.7s" swiper-animate-delay="1s"  >
+          <img src="upload/b2-t6" class="ani resize" style="width:5.27rem;height:.92rem;left:50%; margin-left:-2.635rem; top:9.4rem;z-index:3;" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="1.5s"  > 
+        </section>
+		<section class="swiper-slide page3">     
+          <img src="upload/b3-t1.png" class="ani resize" style="width:5.55rem;height:1.62rem;left:0.97rem;top:1.7rem;z-index:5;" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay=".1s"  >
+          <a href="http://idreamsky.m.zhiye.com/JobAd/Info?adid=350078442"><img src="upload/b3-d1.png" class="ani resize showscale" style="width:2.12rem;height:2.9rem;left:0.4rem;top:4.31rem;z-index:6;" ></a>
+          <a href="http://idreamsky.m.zhiye.com/JobAd/Info?adid=350081967"><img src="upload/b3-d2.png" class="ani resize showscale" style="width:2.12rem;height:2.9rem;left:2.69rem;top:4.31rem;z-index:6;"  > </a>
+          <a href="http://idreamsky.m.zhiye.com/JobAd/Info?adid=350081965"><img src="upload/b3-d3.png" class="ani resize showscale" style="width:2.12rem;height:2.9rem;right:0.4rem;top:4.31rem;z-index:6;" ></a>
+          <a href="http://idreamsky.m.zhiye.com/JobAd/Info?adid=350081930"><img src="upload/b3-d4.png" class="ani resize showscale" style="width:2.12rem;height:2.9rem;left:0.4rem;top:7.6rem;z-index:7;" ></a>
+          <a href="http://idreamsky.m.zhiye.com/JobAd/Info?adid=350076809"><img src="upload/b3-d5.png" class="ani resize showscale" style="width:2.12rem;height:2.9rem;left:2.69rem;top:7.6rem;z-index:7;" ></a>
+          <a href="http://idreamsky.m.zhiye.com/JobAd/Info?adid=350081966"><img src="upload/b3-d6.png" class="ani resize showscale" style="width:2.12rem;height:2.9rem;right:0.4rem;top:7.6rem;z-index:7;" >    </a>   
+        </section>
+        <section class="swiper-slide page4">
+          <div style="width:7.5rem;height:.66rem;left:0;top:1.67rem;z-index:5; " class="ani resize" swiper-animate-effect="fadeIn" swiper-animate-duration="0.5s" swiper-animate-delay=".1s"  >
+            <img src="upload/b4-t1.png" style="width:2.74rem;height:.66rem;margin:0 auto;">
+          </div>
+          <div class="ani resize in1" swiper-animate-effect="rotateIn" swiper-animate-duration=".6s" swiper-animate-delay=".4s">
+            <div class="ibox">
+              <p>推荐人姓名:</p>
+              <input class="mtname" type="text" msg="请填写推荐人姓名"/>
+            </div>
+            <div class="ibox">
+              <p>推荐人电话:</p>
+              <input class="mttel" type="tel" oninput="if(value.length>11)value=value.slice(0,11)" msg="请填写推荐人电话"/>
+            </div>
+          </div>
+          <div class="ani resize in2" swiper-animate-effect="rotateIn" swiper-animate-duration=".6s" swiper-animate-delay=".8s">
+            <div class="ibox">
+              <p>候选人姓名:</p>
+              <input class="mcname" type="text" msg="请填写候选人姓名"/>
+            </div>
+            <div class="ibox">
+              <p>现任公司:</p>
+              <input class="mcgs" type="text" msg="请填写现任公司"/>
+            </div>
+            <div class="ibox">
+              <p>现任岗位:</p>
+              <input class="mcjob" type="text" msg="请填写现任岗位"/>
+            </div>
+            <div class="ibox">
+              <p>电话:</p>
+              <input class="mctel" type="tel" oninput="if(value.length>11)value=value.slice(0,11)" msg="请填写电话"/>
+            </div>
+          </div>
+          <div class="ani resize btn" title="提交" swiper-animate-effect="rotateIn" swiper-animate-duration="0.6s" swiper-animate-delay="1.2s"></div>       
+        </section>
+        <section class="swiper-slide page5">
+          <img src="upload/b5-t1.png" class="ani resize" style="width:4.6rem;height:1.48rem;left:1.45rem;top:2.3rem;z-index:3;" swiper-animate-effect="fadeInRight" swiper-animate-duration="0.5s" swiper-animate-delay=".2s"  >
+          <img src="upload/b5-t2.jpg" class="ani resize" style="width:3.57rem;height:3.57rem;left:50%;top:4.6rem;margin-left:-1.785rem;z-index:3;" swiper-animate-effect="fadeInRight" swiper-animate-duration="0.6s" swiper-animate-delay=".4s"  >  
+          <img src="upload/b5-t3.png" class="ani resize" style="width:3.88rem;height:.29rem;left:1.81rem;top:8.8rem;z-index:3;" swiper-animate-effect="fadeInRight" swiper-animate-duration="0.6s" swiper-animate-delay=".8s"  >
+          <img src="upload/log1.png" class="ani resize" style="width:1.89rem;height:.75rem;right:1.45rem;top:9.6rem;z-index:4;" swiper-animate-effect="fadeIn" swiper-animate-duration="0.5s" swiper-animate-delay="1.3s"  >
+          <img src="upload/log2.png" class="ani resize" style="width:2.42rem;height:.34rem;left:1rem;top:9.82rem;z-index:3;" swiper-animate-effect="fadeIn" swiper-animate-duration="0.5s" swiper-animate-delay="1.3s"  >     
+        </section>        
+    </div>    
+    <img src="upload/down.png" style="width:.54rem;height:.52rem; bottom:.75rem; left:50%;margin-left:-.27rem;" id="array" class="resize">
+    <div id="mp3" class="mp3 play">
+      <audio id="musicfx" loop autoplay="autoplay">
+        <source src="upload/ssss.mp3" type="audio/mpeg">
+      </audio>
+    </div> 
+    <div class="swiper-pagination"></div>  
+</div>
+<script>
+//微信自动播放
+document.addEventListener('DOMContentLoaded', function () {
+    function audioAutoPlay() {
+        var audio = document.getElementById('musicfx');
+            audio.play();
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            audio.play();
+        }, false);
+    }
+    audioAutoPlay();
+});
+
+window.onload=function(){
+  function onMsg(msg){
+    if($("#cmTips").length){
+      clearTimeout(_timer);
+      $("#cmTips").remove();
+    };
+    var oHtml = [];
+    oHtml.push('<section id="cmTips" class="cmTips dbox cm-ts">');
+    oHtml.push('  <p class="msg-tx">'+msg+'</p>');
+    oHtml.push('</section>');
+
+    $("body").append(oHtml.join("")).find("#cmTips").addClass('show');
+    _timer = setTimeout(function(){
+      $("#cmTips").remove();
+    },4000);
+  }
+
+  
+
+  $('.swiper-container').height($('body').height());
+
+  var pic=['http://dl.gamdream.com/upload/bg.jpg','http://dl.gamdream.com/upload/b5-btn.png'];
+
+  var bgArr=[];
+  var newPic=[];
+  var mjson={};
+
+  $('img').each(function(){
+    newPic.push($(this).attr("src"));
+  });
+ 
+  for(var i=0;i<newPic.length;i++){
+    if(!mjson[newPic[i]]){
+        mjson[newPic[i]]=1;
+        bgArr.push(newPic[i])
+    }
+  }
+
+  bgArr.concat(pic);
+
+  var nlen=0;
+
+  function bgLoad(){
+    for(var i=0;i<bgArr.length;i++){
+      var aImg=new Image();
+      aImg.onload=function(){
+        nlen++;
+        //console.log(parseInt((nlen/bgArr.length)*100)+'%')
+        if(nlen==bgArr.length-1){
+          loadfn();
+        }
+      };
+      aImg.onerror=function(){
+        nlen++;
+        if(nlen==bgArr.length-1){
+          loadfn();
+        }
+      };
+      aImg.src=bgArr[i]
+    }
+  }
+  bgLoad()
+
+  function loadfn(){
+    $('.loader-inner').hide().siblings('#content').show();
+    var _index=0;
+    if(location.hash.substr(1)=='out'){
+        _index=2;         
+        location.hash=""
+    }else{
+        _index=0;
+    }
+    var mySwiper = new Swiper ('.swiper-container',{
+      direction : 'vertical',
+      pagination: false,
+      mousewheelControl : true,
+      initialSlide:_index,
+      speed:600,
+      onInit: function(swiper){
+        swiperAnimateCache(swiper);
+        swiperAnimate(swiper);
+      },
+      onSlideChangeEnd: function(swiper){        
+        
+      },
+      onTransitionEnd: function(swiper){
+        swiperAnimate(swiper);
+        if(swiper.activeIndex==4){
+          $('#array').hide()
+        }else{
+          $('#array').show()
+        }
+      }   
+    });
+    //mySwiper.lockSwipes()
+    //mySwiper.unlockSwipes()
+  }
+
+  $('#mp3').click(function(event){
+    if ($('#mp3').hasClass('play')){
+      $('#mp3 audio').get(0).pause();
+      $('#mp3').removeClass('play');
+    }else{
+      $('#mp3 audio').get(0).play();
+      $('#mp3').addClass('play');
+    }
+    event.stopPropagation(); //阻止冒泡 
+  });
+
+  $('.page3 a').each(function(){
+    var _this=$(this);
+    _this.click(function(){
+      location.hash='out';
+      location.href=_this.attr("href");
+      return false;
+    });
+  });
+
+  var _btn=true;
+  var reg=/^1\d{10}$/;
+  $('.btn').on('click',function(){
+    var recommender_name=$('.mtname').val();
+    var recommender_phone=$('.mttel').val();
+    var candidate_name=$('.mcname').val();
+    var candidate_company=$('.mcgs').val();
+    var candidate_job=$('.mcjob').val();
+    var candidate_phone=$('.mctel').val();
+
+    if(!$.trim(recommender_name)){
+      onMsg($('.mtname').attr('msg'));
+      return false;
+    }
+    if(!reg.test(recommender_phone)){
+      onMsg($('.mttel').attr('msg'));
+      return false;
+    }
+    if(!$.trim(candidate_name)){
+      onMsg($('.mcname').attr('msg'));
+      return false;
+    }
+    if(!$.trim(candidate_company)){
+      onMsg($('.mcgs').attr('msg'));
+      return false;
+    }
+    if(!$.trim(candidate_job)){
+      onMsg($('.mcjob').attr('msg'));
+      return false;
+    }
+    if(!reg.test(candidate_phone)){
+      onMsg($('.mctel').attr('msg'));
+      return false;
+    }
+
+
+    if(_btn){
+      _btn=false;
+      $('#loading').show();
+      $.ajax({
+        url: 'submit',
+        type: 'get',
+        dataType: 'json',
+        data: {
+            recommender_name:recommender_name,
+            recommender_phone:recommender_phone,
+            candidate_name:candidate_name,
+            candidate_company:candidate_company,
+            candidate_job:candidate_job,
+            candidate_phone:candidate_phone
+        },
+        success:function(data){
+          $('#loading').hide();
+          _btn=true;
+          onMsg('成功提交！')
+        },
+        error:function(data){
+          $('#loading').hide();
+          _btn=true;
+          onMsg('请求出错！')
+        }
+      });     
+    }
+  })
+
+
+
+  //微信分享
+  wxfn();  
+  function wxfn(){
+      var wxConfig={};
+      var odata={'share_url':'/Zhaopin'+location.href.split('/Zhaopin')[1]};
+      $.ajax({
+          url:'shareConfig',
+          type: 'get',
+          dataType: 'json',
+          data: odata,
+          success:function(data){                
+              if(data.error_code==0){                                    
+                  for(var i in data.data){
+                      wxConfig[i]=data.data[i];
+                  }
+                  wxShare(wxConfig.appId,wxConfig.timestamp,wxConfig.nonceStr,wxConfig.signature,wxConfig.shareurl,wxConfig.shareConfig)
+              }
+          }
+      })       
+  }
+
+  function wxShare(gappid,gtimestamp,gnonceStr,gsignature,gshareurl,gshareConfig){      
+      wx.config({
+          debug: false,
+          appId: gappid,
+          timestamp:gtimestamp,
+          nonceStr: gnonceStr,
+          signature: gsignature,
+          jsApiList: [
+              'checkJsApi',
+              'chooseImage',
+              'previewImage',
+              'uploadImage',
+              'downloadImage',
+              'onMenuShareTimeline',
+              'onMenuShareAppMessage',
+              'onMenuShareQQ',
+              'onMenuShareWeibo'
+          ]
+      });
+
+      window.shareData = {
+          "imgUrl": "http://dl.gamdream.com/upload/share.jpg",
+          "timeLineLink": location.href,
+          "sendFriendLink": location.href,
+          "weiboLink": location.href,
+          "tTitle": "乐逗送豪礼，举荐得大奖",
+          "tContent": "乐逗广邀各路仙友。iPhone现金等你来拿。",
+          "fTitle": "乐逗送豪礼，举荐得大奖",
+          "fContent": "乐逗广邀各路仙友。iPhone现金等你来拿。",
+          "wTitle": "乐逗送豪礼，举荐得大奖",
+          "wContent": "乐逗广邀各路仙友。iPhone现金等你来拿。",
+      };
+
+      wx.ready(function() {
+          var shareDataLine = {
+              title: window.shareData.tTitle,
+              link: window.shareData.timeLineLink,
+              imgUrl: window.shareData.imgUrl,
+              success:function(res){
+                  //alert("恭喜你，分享成功！");                                           
+              }
+          }
+          var shareData = {
+              title: window.shareData.fTitle,
+              desc: window.shareData.fContent,
+              link: window.shareData.sendFriendLink,
+              imgUrl: window.shareData.imgUrl,
+              success:function(res){
+                  //alert("恭喜你，分享成功！");
+              }
+          }
+
+          wx.onMenuShareAppMessage(shareData);
+          wx.onMenuShareTimeline(shareDataLine);
+          wx.onMenuShareQQ(shareData);
+          wx.onMenuShareWeibo(shareData);
+      });
+
+  } 
+};         
+</script>
+</body>
+</html>
