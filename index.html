@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+<meta content="telephone=no" name="format-detection" />
+<meta name="msapplication-tap-highlight" content="no">
+<style type="text/css">
+*{font-size:14px;padding:0;margin:0;font-weight:normal;font-style:normal;list-style:none;font-family: arial;}
+#demo_zone{margin:20px auto;padding:0 20px 0 30px;max-width:800px;}
+ul{counter-reset: li;padding: 0;margin:0 0 4em;text-shadow: 0 1px 0 rgba(255,255,255,.5);}
+.rounded-list a{position: relative;display: block;padding: .4em .4em .4em 2em;*padding: .4em;margin: .5em 0;background: #ddd;color: #444;text-decoration: none;-webkit-border-radius: .3em;border-radius: .3em;-webkit-transition: all .3s ease-out;transition: all .3s ease-out;}
+.rounded-list a:hover{background: #eee;}
+.rounded-list a:hover:before{-webkit-transform: rotate(360deg);transform: rotate(360deg);}
+.rounded-list a:before{content:counter(li);counter-increment: li; position: absolute;left: -1.3em;top: 50%;margin-top: -1.3em;background: #87ceeb;height: 2em;width: 2em;line-height: 2em;border: .3em solid #fff;text-align: center;font-weight: bold;-webkit-border-radius: 2em;border-radius: 2em;-webkit-transition: all .3s ease-out;transition: all .3s ease-out;}
+.mt{line-height: 1.54;color:#333;font-size:20px;padding-bottom:5px;padding-left:15px;font-weight:500;}
+</style>
+<title>列表</title>
+<script type="text/javascript">
+    var devieWidth=Math.min(750,(screen.width>screen.height?screen.height:screen.width));
+    //document.documentElement.style.fontSize=devieWidth/7.5+'px';
+</script>
+</head>
+<body>
+<div id="demo_zone">
+    <h3 class="mt">链接列表</h3>
+    <ul class="rounded-list">
+        <li><a href="https://galan99.github.io/demo/ledou/zhaopin/">h5招聘</a></li>
+        <li><a href="https://galan99.github.io/demo/gulp/">gulp压缩图片，css,js并合并</a></li>
+        <li><a href="https://galan99.github.io/demo/kugou/">h5酷狗播放器</a></li>
+    </ul>
+</div>
+</body>
+</html>
