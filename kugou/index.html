@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+<meta content="telephone=no" name="format-detection" />
+<meta name="msapplication-tap-highlight" content="no">
+<style type="text/css">
+*{font-size:.32rem;padding:0;margin:0;font-weight:normal;font-style:normal; list-style:none;}
+body{width:7.5rem;margin:0 auto; background:#fff; overflow:hidden;position:relative;}
+html,body{height:100%;}
+.play-overlay{z-index:2;}
+.play-overlay,.bg-overlay{width: 100%;height: 100%;position: absolute;top: 0;left: 0;background: rgba(0,0,0,.6);}
+.wrap{height:100%;position:relative;z-index:5;}
+.bg-overlay{background:url(http://singerimg.kugou.com/uploadpic/softhead/200/20161009/20161009101130222.jpg) no-repeat 50%;background-size:cover;-webkit-filter: blur(15px);filter:blur(15px);}
+.panel-play-img-box{width:3.8rem;height:3.8rem;display:block;border:none;margin:0 auto .5rem;}
+img{width:100%;}
+.panel-play-lrc-box{
+    height:1.1rem;
+    overflow: hidden;
+}
+.panel-play-lrc{
+    text-align:center;
+    color:#afabac;
+    transition: all 0s;
+    transform: translateZ(0);
+}
+.panel-play-lrc-box p {
+    width: 100%;
+    height:.55rem;
+    line-height:.55rem;
+    vertical-align: top;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size:.32rem;
+}
+.panel-play-lrc-box .current {
+    color: #d1c90e
+}
+.panel-play-lrc-box .nolrc {
+    color: #fff
+}
+
+.time-wrap {
+    width: 100%;
+    padding: .5rem .3rem;
+    display: box;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: justify;
+    -webkit-box-orient: horizontal;
+    -webkit-box-sizing: border-box;
+    box-align: center;
+    box-pack: justify;
+    box-orient: horizontal;
+    box-sizing: border-box;
+}
+
+.progress-wrap,.time-wrap {
+    -webkit-box-flex: 1;
+    box-flex: 1
+}
+
+.progress-wrap {
+    height: .1rem;
+    margin: 0 .2rem;
+    background: #232228;
+    position: relative;
+    z-index: 2
+}
+
+.progress-bar {
+    width: 100%;
+    height: 100%
+}
+
+.preview-progress,.progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 0;
+    height: 100%
+}
+
+.preview-progress {
+    background: #6c6b70
+}
+
+.progress,.progress span {
+    background: #3195fd
+}
+
+.progress span {
+    position: absolute;
+    top: 50%;
+    right: -.15rem;
+    margin-top: -.15rem;
+    width: .3rem;
+    height: .3rem;
+    display: block;
+    border-radius: 100%
+}
+
+.time,.timeshow {
+    color: #dcdcdc
+}
+
+.play-operate {
+    margin: 0 auto;
+    font-size: 0;
+    text-align: center
+}
+
+.play-operate .btn-download,.play-operate .btn-next,.play-operate .btn-prev {
+    width:.8rem;
+    height: .8rem;
+    margin: 0 .3rem;
+    display: inline-block;
+    vertical-align: middle
+}
+
+.play-operate .btn-loading,.play-operate .btn-pause,.play-operate .btn-play {
+    width: 1rem;
+    height: 1rem;
+    margin: 0 .3rem;
+    display: inline-block;
+    vertical-align: middle
+}
+
+.play-operate .btn-play {
+    background: url(images/play_play.png) no-repeat;
+    background-size: 100%
+}
+
+.play-operate .btn-loading {
+    -webkit-animation: none;
+    animation: none
+}
+
+.play-operate .btn-loading,.play-operate .btn-pause {
+    background: url(images/play_pause.png) no-repeat;
+    background-size: 100%
+}
+
+.play-operate .btn-prev {
+    background: url(images/play_prev.png) no-repeat;
+    background-size: 100%
+}
+
+.play-operate .btn-next {
+    background: url(images/play_next.png) no-repeat;
+    background-size: 100%
+}
+
+.play-operate .btn-download {
+    background: url(images/play_download.png) no-repeat;
+    background-size: 100%
+}
+
+
+</style>
+<title>音乐播放</title>
+<script type="text/javascript">
+    var devieWidth=Math.min(750,(screen.width>screen.height?screen.height:screen.width));
+    document.documentElement.style.fontSize=devieWidth/7.5+'px';
+</script>
+</head>
+<script src="zepto.js"></script>
+<body>
+<div class="play-overlay"></div>
+<div class="bg-overlay"></div>
+<div class="wrap">
+    <div class="panel-play-img-box"><img src="http://singerimg.kugou.com/uploadpic/softhead/200/20161009/20161009101130222.jpg"/></div>
+    <div class="panel-play-lrc-box">
+        <div class="panel-play-lrc" id="playLrc"></div>
+    </div>
+    <div class="time-wrap" id="timeWrap">
+        <div class="timeshow" id="timeshow">00:00</div>
+        <div class="progress-wrap" id="progressWrap">
+            <div class="progress-bar" id="progressBar">
+                <div class="preview-progress" id="previewProgress" style="width:100%;"></div>
+                <div class="progress" id="progress" style="width:0%;"><span></span></div>
+            </div>
+        </div>
+        <div class="time" id="time">00:00</div>
+    </div>
+    <div class="play-operate">
+        <i class="btn-prev js-btnPrev" style="display:none;"></i>
+        <i class="js-btnPlayPause btn-play"></i> 
+        <i class="btn-next js-btnNext" style="display:none;"></i>
+    </div>
+</div>
+<div id="player" style="display:none;"><audio preload id="kugou" height="100%" width="100%" controls="" src="mp3/meiyou.m4a"></audio></div>
+<script>
+    var mSongFn=function(){
+
+    };
+    mSongFn.prototype={
+        constructor:mSongFn,       
+    }
+
+    var strLrc='';
+    $.ajax({
+        url: 'test/demo.txt',
+        type: 'GET',
+        async:false,
+        data:{},
+        success:function(data){
+            strLrc=data;
+        }
+    });
+
+    var myFn={
+        init:function(){
+            this.audio=document.querySelector('#kugou');
+            this.beginTime=document.querySelector('#timeshow');
+            this.overTime=document.querySelector('#time');
+            this.progressBar=document.querySelector('#progressBar');
+            this.progressWrap=document.querySelector('#progressWrap');
+            this.touch();
+        },
+        trim:function(s){
+            return s.replace(/(^\s*)|(\s*$)/g, "");
+        },
+        getLrc:function(text){
+            var _this=this;
+            var lines = text.split('\n'),   
+                pattern = /\[\d{2}:\d{2}.\d{2}\]/g,   
+                result = [];
+            //lines.splice(-1, 1);
+
+            for(var i=0;i<lines.length;i++){
+                result.push({time:_this.fortime(lines[i].substr(1,8)),lrc:_this.trim(lines[i].substr(10))})
+            }
+            return result;
+        },
+        fortime:function(value){
+            return (value.split(':')[0]*60*100+value.split(':')[1]*100)/100;
+        },
+        time:function(value){
+            var length = Math.floor(parseInt(value));
+            var minute = Math.floor(value / 60);
+            if (minute < 10) {
+                minute = '0' + minute;
+            }
+            var second = length % 60;
+            if (second < 10) {
+                second = '0' + second;
+            }
+            return minute + ':' + second;
+        },
+        update:function(){
+            var _this=this;
+            return {
+                lrc:function(arr){
+                    var html='';
+                    for(var i=0;i<arr.length;i++){
+                        html+='<p data-time="'+arr[i].time+'">'+arr[i].lrc+'</p>';
+                    }
+                    $('#playLrc').html(html);
+                },
+                progress:function(obj){
+                    _this.beginTime.innerHTML=_this.time(_this.audio.currentTime);
+                    $(_this.audio).addClass('btn-play').removeClass('btn-pause');
+                    $('#progress').css('width',_this.audio.currentTime/_this.audio.duration*100+'%');
+                    for (var i=0;i<$('#playLrc p').length;i++){
+                        if (_this.audio.currentTime > $('#playLrc p').eq(i).attr('data-time')) {
+                            $('#playLrc p').eq(i).addClass('current').siblings('p').removeClass('current');
+                            if(i>=1){
+                                $('.panel-play-lrc').css('margin-top',-i*$('#playLrc p').eq(0).height());
+                            }
+                        };
+                    };
+                },               
+            }
+        },      
+        touch:function(){
+            var _this=this;
+            //获取播放总时间
+            _this.audio.oncanplay=function(){
+                var lrc=_this.getLrc(strLrc);
+                _this.update().lrc(lrc);
+                _this.overTime.innerHTML=_this.time(this.duration);
+            };
+
+            $('.js-btnPlayPause').click(function(){
+                if($(this).hasClass('btn-play')){
+                    _this.audio.play();
+                    $(this).addClass('btn-pause').removeClass('btn-play');
+                }else{
+                    _this.audio.pause();
+                    $(this).addClass('btn-play').removeClass('btn-pause'); 
+                }                            
+            });
+
+            //监听播放进度          
+            $(_this.audio).on('timeupdate',function(){
+                _this.update().progress();
+            });
+
+            $('.progress span').on('touchstart',function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                var totalW = $('#previewProgress').width();
+                var leftDis = $('.progress span').get(0).offsetLeft;            
+                var dis = e.touches[0].clientX - leftDis;
+                var scale=0;
+
+                document.addEventListener("touchmove",defaultEvent,false);
+                $(_this.audio).off('timeupdate',false)
+
+                $('.progress span').on("touchmove", function(e) {                   
+                    var touchMove = e.touches[0].clientX-dis;
+                    if(touchMove<=0){
+                        touchMove=0;
+                    }else if(touchMove>totalW){
+                        touchMove=totalW;
+                    }
+                    scale=touchMove/totalW*100
+                    $('#progress').css('width',scale+'%')
+                },false);
+
+                $('.progress span').on("touchend", function(e){
+                    _this.audio.currentTime=scale/100*_this.audio.duration;
+                    _this.audio.ontimeupdate=function(){
+                        _this.update().progress();
+                    }
+                    document.removeEventListener("touchmove",defaultEvent,false);
+                },false);
+
+            },false);
+
+            $('.progress-bar').on('click',function(ev){
+                var ev = ev || window.event;
+                var totalW = $('.progress-bar').width();
+                var leftDis = $('.progress-bar').offset().left;  
+                var L = (ev.clientX - leftDis)/totalW*100;
+
+                _this.audio.currentTime=L/100*_this.audio.duration;
+                _this.audio.ontimeupdate=function(){
+                    _this.update().progress();
+                }
+            });
+
+            function defaultEvent(e) {
+                e.preventDefault();
+            }
+        },
+    };
+    myFn.init()
+    
+  
+</script>
+</body>
+</html>
