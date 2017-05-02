@@ -3,18 +3,29 @@
   "version": "2.0.0",
   "author": "galan",
   "devDependencies": {
+    "browser-sync": "2.18.8",
+    "del": "2.2.2",
     "gulp": "^3.8.10",
+    "gulp-change": "1.0.0",
+    "gulp-changed": "^3.0.0",
     "gulp-clean": "0.3.1",
-    "gulp-concat": "2.6.0",
-    "gulp-uglify": "1.4.2",
-    "gulp-imagemin": "3.1.1",
+    "gulp-clean-css": "3.0.4",
+    "gulp-concat": "^2.6.0",
     "gulp-cssmin": "0.1.7",
+    "gulp-htmlmin": "3.0.0",
+    "gulp-imagemin": "3.1.1",
+    "gulp-less": "3.3.0",
     "gulp-tinypng-compress": "1.2.1",
-    "gulp-util": "~2.2.9"
+    "gulp-uglify": "1.4.2",
+    "gulp-util": "~2.2.9",
+    "imagemin-pngquant": "5.0.0"
   },
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "gulp-clean-css": "^3.0.4"
+  }
 }
