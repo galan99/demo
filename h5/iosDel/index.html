@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+  <meta content="telephone=no" name="format-detection" />
+  <meta name="msapplication-tap-highlight" content="no">
+    <title>app</title>
+  </head>
+  <style>
+     *{ padding:0; margin:0; list-style: none;}
+     header{ background: #f7483b; border-bottom: 1px solid #ccc;}
+     header h2{ text-align: center; line-height: 54px; font-size: 16px; color: #fff;}
+     .list-ul{ overflow: hidden;}
+     .list-li{ line-height: 60px; border-bottom: 1px solid #fcfcfc; position:relative;padding: 0 12px; color: #666;
+         background: #f2f2f2;
+         -webkit-transform: translateX(0px);
+     }
+     .btn{ position: absolute; top: 0; right: -80px; text-align: center; background: #ffcb20; color: #fff; width: 80px;}
+</style>
+</head>
+<body>
+<header>
+  <h2>消息列表</h2>
+</header>
+<section class="list">
+     <ul class="list-ul">
+         <li id="li" class="list-li">
+             <div class="con">
+                 你的快递到了，请到楼下签收
+             </div>
+             <div class="btn">删除</div>
+         </li>
+         <li class="list-li">
+             <div class="con">
+                 哇，你在干嘛，快点来啊就等你了
+             </div>
+             <div class="btn">删除</div>
+         </li>
+     </ul>
+</section>
+ 
+<p>X: <span id="X"></span></p>
+<p>objX: <span id="objX"></span></p>
+<p>initX: <span id="initX"></span></p>
+<p>moveX: <span id="moveX"></span></p>
+ 
+<script type="text/javascript" src="http://apps.bdimg.com/libs/zepto/1.1.4/zepto.min.js"></script>
+<script type="text/javascript">
+     $(function() {
+        $('.list-li').touchWipe({itemDelete: '.btn'});
+     });
+/**
+ 2  * zepto插件：向左滑动删除动效
+ 3  * 使用方法：$('.itemWipe').touchWipe({itemDelete: '.item-delete'});
+ 4  * 参数：itemDelete  删除按钮的样式名
+ 5  */
+
+(function($) {
+   $.fn.touchWipe = function(option) {
+     var defaults = {
+       itemDelete: '.item-delete', //删除元素
+     };
+     var opts = $.extend({}, defaults, option); //配置选项
+ 
+     var delWidth = $(opts.itemDelete).width();
+ 
+     var initX; //触摸位置
+     var moveX; //滑动时的位置
+     var X = 0; //移动距离
+     var objX = 0; //目标对象位置
+     $(this).on('touchstart', function(event) {
+       event.preventDefault();
+       var obj = this;
+       initX = event.targetTouches[0].pageX;
+       objX = (obj.style.WebkitTransform.replace(/translateX\(/g, "").replace(/px\)/g, "")) * 1;
+       if (objX == 0) {
+         $(this).on('touchmove', function(event) {
+           event.preventDefault();
+           var obj = this;
+           moveX = event.targetTouches[0].pageX;
+           X = moveX - initX;
+           if (X >= 0) {
+             obj.style.WebkitTransform = "translateX(" + 0 + "px)";
+           } else if (X < 0) {
+             var l = Math.abs(X);
+             obj.style.WebkitTransform = "translateX(" + -l + "px)";
+             if (l > delWidth) {
+               l = delWidth;
+               obj.style.WebkitTransform = "translateX(" + -l + "px)";
+             }
+           }
+         });
+       } else if (objX < 0) {
+         $(this).on('touchmove', function(event) {
+           event.preventDefault();
+           var obj = this;
+           moveX = event.targetTouches[0].pageX;
+           X = moveX - initX;
+           if (X >= 0) {
+             var r = -delWidth + Math.abs(X);
+             obj.style.WebkitTransform = "translateX(" + r + "px)";
+             if (r > 0) {
+               r = 0;
+               obj.style.WebkitTransform = "translateX(" + r + "px)";
+             }
+           } else { //向左滑动
+             obj.style.WebkitTransform = "translateX(" + -delWidth + "px)";
+           }
+         });
+       }
+ 
+     })
+     $(this).on('touchend', function(event) {
+       event.preventDefault();
+       var obj = this;
+       objX = (obj.style.WebkitTransform.replace(/translateX\(/g, "").replace(/px\)/g, "")) * 1;
+       if (objX > -delWidth / 2) {
+         obj.style.transition = "all 0.2s";
+         obj.style.WebkitTransform = "translateX(" + 0 + "px)";
+         obj.style.transition = "all 0";
+         objX = 0;
+       } else {
+         obj.style.transition = "all 0.2s";
+         obj.style.WebkitTransform = "translateX(" + -delWidth + "px)";
+         obj.style.transition = "all 0";
+         objX = -delWidth;
+       }
+     })
+ 
+     //链式返回
+     return this;
+   };
+ 
+})(Zepto);
+</script>
+</body>
+</html>

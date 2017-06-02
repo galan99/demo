@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>上传压缩图片</title>
+<link rel="shortcut icon" href="http://hanyang.me/images/favicon.ico" />
+<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<style>
+h1 {
+	font-size: 12em;
+	margin: 30px;
+	color: #4d63bc;
+	font-weight: normal;
+	font-family: "Consolas";
+}
+div {
+	/*background-color: green;*/
+}
+:-webkit-full-screen  {
+		width: 100%;
+		height: 100%;
+}
+.btn {
+	display: inline-block;
+	padding: 6px 12px;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #ADADAD;
+	border-radius: 5px;
+}
+input {
+	display: none;
+}
+body{font-size:.3rem;}
+.zz{display:none;position:fixed;left:0;top:0;right:0;bottom:0;background: rgba(0,0,0,.5);z-index:9999;}
+.zz>p{position:absolute;left:0;top:35%;width:100%;text-align:center;color:#fff;}
+.loading{width:30px;height:30px;border:1px #fff solid;border-radius:50%;-webkit-animation: rotation 1s ease-in-out infinite;animation: rotation 1s ease-in-out infinite;margin:130px auto;}
+.loading:after{width:5px;height:5px;background-color:rgba(255,255,255,1);border-radius:100%;position:absolute;content: "";}
+@-webkit-keyframes rotation{0%{-webkit-transform: rotate(0deg);}100%{-webkit-transform: rotate(360deg);}}
+@keyframes rotation{0%{transform: rotate(0deg);}100%{transform: rotate(360deg);}}
+.msg-tx{min-width:150px;padding:5px 20px;margin:0 auto;border-radius:5px;box-shadow:0 1px 2px rgba(0,0,0,.8);background:rgba(0,0,0,.8);font-size:14px;line-height:30px;}
+.cmTips{position:fixed;left:0;right:0;top:10px;z-index:99;padding:20px 20px 5px;text-align:center;z-index:99999;color:#fff;overflow:hidden;display:-webkit-box;display:box;-webkit-transform:translateY(-100%);transform:translateY(-100%);-webkit-transition-delay:1s;transition-delay: 1s;-webkit-transition-duration:.5s;transition-duration:.5s;}
+.show.cmTips{-webkit-animation:tips .5s linear both,tipsHide .5s 3s linear forwards;animation:tips .5s linear both,tipsHide .5s 3s linear forwards;}
+.cm-ts{-webkit-transition-duration:500ms;transition-duration:500ms;}
+@-webkit-keyframes tips{from {-webkit-transform:translateY(-100%);opacity:0}to { -webkit-transform:translateY(0%);opacity:1;}}
+@keyframes tips{from{-webkit-transform:translateY(-100%);opacity:0}to{ -webkit-transform:translateY(0%);opacity:1;}}
+@-webkit-keyframes tipsHide{from{-webkit-transform:translateY(0%);opacity:1}to{-webkit-transform:translateY(-100%);opacity:0;}}
+@keyframes tipsHide{from{-webkit-transform:translateY(0%);opacity:1}to{-webkit-transform:translateY(-100%);opacity:0;}}
+</style>
+<script type="text/javascript">
+  var devieWidth=Math.min(640,document.documentElement.clientWidth);
+  document.documentElement.style.fontSize=devieWidth/6.4+'px';
+</script>
+
+<script>
+var _stop=true;
+
+function onMsg(msg){
+	var _timer=null;
+	if($("#cmTips").length){
+		clearTimeout(_timer);
+		$("#cmTips").remove();
+	};
+	var oHtml = [];
+	oHtml.push('<section id="cmTips" class="cmTips dbox cm-ts">');
+	oHtml.push('  <p class="msg-tx">'+msg+'</p>');
+	oHtml.push('</section>');
+
+	$("body").append(oHtml.join("")).find("#cmTips").addClass('show');
+	_timer = setTimeout(function(){
+		$("#cmTips").remove();
+	},4000);
+}
+
+
+window.addEventListener("load", function () {
+	
+	var selectImg = document.querySelector("#select-img");
+	var tip = document.querySelector(".tip");
+
+
+    upPic();
+    var filesArray=[];//图片集合
+	function upPic(){
+		var _obj=$('#select-img').get(0);
+		$('#select-img').on("change",function(e){
+			var file = e.target.files[0];
+			if (!file) {
+				return;
+			}
+
+			var size = file.size;
+			var type = file.type;
+
+			if (type.indexOf("image") === -1) {
+				onMsg("请选择图片文件");		
+				return;
+			}
+
+			if (size > 2 * 1024 * 1024) {
+				onMsg("图片大小过大！");	
+				return;
+			}
+
+			var reader = new FileReader();
+            reader.onload = function (e) {
+            	//读取用户选择的文件
+        		var fileURL=event.target.result;
+
+            	if(samePic(fileURL)==false){
+            		return false;
+            	}
+
+                // 创建image对象
+                var image=new Image();
+                image.src=fileURL;	                
+                image.onload=function(){		                	
+					var compressedDataUrl = compress(image,file.type);
+
+					filesArray.push(compressedDataUrl);
+					var style='';
+					var img=new Image();
+					img.src=compressedDataUrl;
+					var scale=1;
+					img.onload=function(){
+						if(img.width>img.height){
+							scale=1/img.height;
+							style='height:1rem;width:'+scale*img.width+'rem;margin-left:-'+(scale*img.width-1)/2+'rem';
+						}else{
+							scale=1/img.width;
+							style='height:'+scale*img.height+'rem;width:1rem;margin-top:-'+(scale*img.height-1)/2+'rem';
+						}
+						$('<div class="img"><div class="imgbox"><img style="'+style+'" src="'+compressedDataUrl+'"/></div><i class="del"></i></div>').insertBefore(".up");
+						fileNum();
+					};				                	
+					image = null;												                    
+                }
+                
+                																									                	
+            };
+            reader.readAsDataURL(file);
+			
+		});
+
+	    function compress(img, fileType) {
+	        var canvas = document.createElement("canvas");
+	        var ctx = canvas.getContext('2d');
+
+	        var width = img.width;
+	        var height = img.height;
+
+	        if(img.width>=750){
+	        	width=750;
+	        	height=img.height*750/img.width;
+	        }
+	        
+	        canvas.width = width;
+	        canvas.height = height;
+
+	        ctx.fillStyle = "#fff";
+	        ctx.fillRect(0, 0, width, height);
+
+	        ctx.drawImage(img, 0, 0, width, height);
+
+	        // 压缩
+	        var base64data = canvas.toDataURL(fileType, 0.75);
+
+	        var initSize = img.src.length;
+	        console.log('压缩前：', initSize);
+	        console.log('压缩后：', base64data.length);
+	        console.log('压缩率：', 100 * (initSize - base64data.length) / initSize, "%");
+
+	        canvas = ctx = null;
+
+
+
+	        return base64data;
+	    }
+
+		function samePic(obj){			
+			for(var i in filesArray){
+				if(filesArray[i] == obj){
+					onMsg("请勿重复上传相同的图片!");
+					return false;
+				};
+			};
+
+		};
+
+		//删除图片
+		delPic();
+		function delPic(){
+			$('.m_feedback').on('tap','.img',function(){
+				var _index=$(this);
+				var _src=$(this).find('img').attr('src');
+				var _srcIndex=0;
+				for(var i=0;i<filesArray.length;i++){
+					if(_src==filesArray[i]){
+						_srcIndex=i;							
+					}
+				}
+				filesArray.splice(_srcIndex,1);
+				setTimeout(function(){
+					$('.m_feedback .img').eq(_srcIndex).remove();
+					fileNum()
+				},400)
+			});
+		}
+
+		function fileNum(){
+			var num1=parseInt($('.btn').attr("max"));
+			var canNum=num1-$('.m_feedback .img').length;
+			if(canNum<=0){
+				canNum=0;
+				$('.up').hide();
+			}else{
+				//$('.file_num').text('可上传'+canNum+'张')						
+				$('.up').show();
+			}
+			console.log(filesArray)
+			console.log('可上传'+canNum+'张');					
+		}
+	
+	}
+	
+
+}, false);
+</script>
+</head>
+
+<body>
+<section class="zz" id="loading">
+  <div class="loading"></div>
+</section>
+<section id="cmTips" class="cmTips dbox cm-ts">
+	<p class="msg-tx"></p>
+</section>
+<div class="m_feedback">
+	<div class="up"></div>
+</div>
+
+
+<label for="select-img" class="btn" max="5">选择图片</label>
+<input id="select-img" type="file" />
+<p class="tip"></p>
+</body>
+</html>

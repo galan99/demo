@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0;"
+  name="viewport"/>
+    <title>sticky移动端悬浮固定</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+        }
+        .fixed {
+            position: fixed;
+            top: 0;
+        }
+        .dummy {
+            display: none;
+        }
+        .fixed + .dummy {
+            height: 40px;
+            display: block;
+            background: #fff
+        }
+        .container {
+        }
+        .banner {
+            height: 100px;
+        }
+        .nav {
+            width: 100%;
+            height: 40px;
+            background: rgb(72, 197, 187);
+            color: #fff;
+            line-height: 40px;
+            padding-left: 1em
+        }
+        p {
+            font-size: 14px;
+            text-indent: 2em;
+            margin: 10px 0;
+            color: #666;
+            line-height: 2em;
+        }
+        body,.container{position:relative;}
+    </style>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="banner">
+            <h1 id="desc"></h1>
+        </div>
+        <div class="nav"><p style="position:relative;">sticky bar</p></div>
+        <div class="dummy"></div>
+        <div class="content">
+            <p>你所拥有的只是现在。内心的平静，工作的成效，都决定于我们如何活到现在这一刻。不论昨天曾经发生过多少事，也不论明天有什么即将来临，你永远置身“现在”。从这个观点来看，快乐与满足的秘诀，就是全心全意集中于现在的每一分、每一秒之上。</p>
+            <p>小孩子最美妙的一点，就是他们会完全沉浸于现在的片刻里。不论是观察甲虫、画画、筑沙堡或从事任何活动，他们都能做到全神贯注。</p>
+            <p>高中生想：“有朝一日，我毕了业，不必再听师长的训，日子就好过了！”他毕业之后，又觉得必须离开这个家才能找到真正的快乐。离家进入大学后，他又暗下决定：“拿到学位就好了！”好不容易领到文凭，这时他却又发现，快乐要等找到工作才能实现。</p>
+            <p>他找了份工作。不消说，快乐还轮不到他。一年一年过去了，他不断把获得快乐和心灵平静的日期往后挪，直到他订婚、结婚、买房子、换一份更好的工作、退休……最后在享受至高无上的快乐之前，他就去世了。他把所有的现在都用于计划一个永远没有实现的美好未来。</p>
+            <p>你听了这样的故事，觉得心有戚戚焉吗？你认识一些永远把快乐留到未来的人吗？快乐的秘密，说穿了很简单，你的生活必须以现在为中心，我们要在生命的旅途中享受快乐，而不是把它留到终点才用。</p>
+            <p>活到现在，也就是我们从现在从事的每件工作本身找的乐趣，而不只是期待它最后的结果。如果你正在粉刷家中阳台，刷子的每一笔，都该令你感到愉快，帮助你学习如何做好这份工作。你该享受拂面的春风，听院中小鸟唱歌，以及周边的一切。</p>
+            <p>为了活到现在，我们该扩张自己的感官，体会现在这每一刻的种种美妙之处。每一分，每一秒，每个人都可以自由的选择，是否要真正生活到现在，吸收周围的一切，让自己受感动，受影响。</p>
+            <p>你所拥有的只是现在。内心的平静，工作的成效，都决定于我们如何活到现在这一刻。不论昨天曾经发生过多少事，也不论明天有什么即将来临，你永远置身“现在”。从这个观点来看，快乐与满足的秘诀，就是全心全意集中于现在的每一分、每一秒之上。</p>
+            <p>小孩子最美妙的一点，就是他们会完全沉浸于现在的片刻里。不论是观察甲虫、画画、筑沙堡或从事任何活动，他们都能做到全神贯注。</p>
+            <p>高中生想：“有朝一日，我毕了业，不必再听师长的训，日子就好过了！”他毕业之后，又觉得必须离开这个家才能找到真正的快乐。离家进入大学后，他又暗下决定：“拿到学位就好了！”好不容易领到文凭，这时他却又发现，快乐要等找到工作才能实现。</p>
+            <p>他找了份工作。不消说，快乐还轮不到他。一年一年过去了，他不断把获得快乐和心灵平静的日期往后挪，直到他订婚、结婚、买房子、换一份更好的工作、退休……最后在享受至高无上的快乐之前，他就去世了。他把所有的现在都用于计划一个永远没有实现的美好未来。</p>
+            <p>你听了这样的故事，觉得心有戚戚焉吗？你认识一些永远把快乐留到未来的人吗？快乐的秘密，说穿了很简单，你的生活必须以现在为中心，我们要在生命的旅途中享受快乐，而不是把它留到终点才用。</p>
+            <p>活到现在，也就是我们从现在从事的每件工作本身找的乐趣，而不只是期待它最后的结果。如果你正在粉刷家中阳台，刷子的每一笔，都该令你感到愉快，帮助你学习如何做好这份工作。你该享受拂面的春风，听院中小鸟唱歌，以及周边的一切。</p>
+            <p>为了活到现在，我们该扩张自己的感官，体会现在这每一刻的种种美妙之处。每一分，每一秒，每个人都可以自由的选择，是否要真正生活到现在，吸收周围的一切，让自己受感动，受影响。</p>
+        </div>
+    </div>
+    <script>
+        window.onload = function () {
+            var nav = document.querySelector('.nav');
+            var desc = document.querySelector('#desc')
+            var isAdded = false;
+            /**
+             * iOS版本大于6
+             *
+             * @return {boolean} 是否大于6
+             */
+            function gtIos6() {
+                var userAgent = window.navigator.userAgent;
+                var ios = userAgent.match(/(iPad|iPhone|iPod)\s+OS\s([\d_\.]+)/);
+                return ios && ios[2] && (parseInt(ios[2].replace(/_/g, '.'), 10) >= 6);
+            }
+
+            /**
+             * 是否支持sticky
+             *
+             * @return {boolean} 是否支持sticky
+             */
+            function isSupportSticky() {
+                var prefixTestList = ['', '-webkit-', '-ms-', '-moz-', '-o-'];
+                var stickyText = '';
+                for (var i = 0; i < prefixTestList.length; i++ ) {
+                    stickyText += 'position:' + prefixTestList[i] + 'sticky;';
+                }
+                // 创建一个dom来检查
+                var div = document.createElement('div');
+                var body = document.body;
+                div.style.cssText = 'display:none;' + stickyText;
+                body.appendChild(div);
+                isSticky = /sticky/i.test(window.getComputedStyle(div).position);
+                body.removeChild(div);
+                div = null;
+                return isSticky;
+            }
+            if (!isSupportSticky()) {
+                desc.innerHTML = '您的浏览器不支持position:sticky属性';
+                var navOffsetY = nav.offsetTop;
+                function onScroll(e) {
+                    if (window.pageYOffset >= navOffsetY && !isAdded) {
+                        nav.classList.add('fixed');
+                        isAdded = true;
+                    }
+                    else if (window.pageYOffset < navOffsetY && isAdded) {
+                        nav.classList.remove('fixed');
+                        isAdded = false;
+                    }
+                    // window.scrollY >= navOffsetY ? nav.classList.add('fixed') : nav.classList.remove('fixed'); 
+                }
+                document.addEventListener('scroll', onScroll);
+            }
+            else {
+                desc.innerHTML = '您的浏览器支持position:sticky属性';
+                nav.classList.add('sticky');
+            }
+
+            
+        }
+
+    </script>
+</body>
+</html>
