@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>flex布局</title>
+<link rel="shortcut icon" href="http://hanyang.me/images/favicon.ico" />
+<script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+<style>
+*{padding:0;margin:0;font-family: "Microsoft YaHei", helvetica, arial, "lucida grande", verdana, sans-serif;}
+h3{font-weight: normal;}
+li{list-style:none;}
+body{width:7.5rem;margin:0 auto; overflow-x:hidden;font-size:.3rem;}
+/*loading*/
+.zz{display:none;position:fixed;left:0;top:0;right:0;bottom:0;background: rgba(0,0,0,.5);z-index:9999;}
+.zz>p{position:absolute;left:0;top:35%;width:100%;text-align:center;color:#fff;}
+.loading{width:30px;height:30px;border:1px #fff solid;border-radius:50%;-webkit-animation: rotation 1s ease-in-out infinite;animation: rotation 1s ease-in-out infinite;margin:130px auto;}
+.loading:after{width:5px;height:5px;background-color:rgba(255,255,255,1);border-radius:100%;position:absolute;content: "";}
+@-webkit-keyframes rotation{0%{-webkit-transform: rotate(0deg);}100%{-webkit-transform: rotate(360deg);}}
+@keyframes rotation{0%{transform: rotate(0deg);}100%{transform: rotate(360deg);}}
+
+/*提示语*/
+.cmTips{position:fixed;left:0;right:0;top:10px;z-index:99;padding:20px 20px 5px;text-align:center;z-index:99999;color:#fff;overflow:hidden;display:-webkit-box;display:box;-webkit-transform:translateY(-100%);transform:translateY(-100%);-webkit-transition-delay:1s;transition-delay: 1s;-webkit-transition-duration:.5s;transition-duration:.5s;-webkit-transition-duration:500ms;transition-duration:500ms;}
+.cmTips p{min-width:150px;padding:5px 20px;margin:0 auto;border-radius:5px;box-shadow:0 1px 2px rgba(0,0,0,.8);background:rgba(0,0,0,.8);font-size:14px;line-height:30px;}
+.show.cmTips{-webkit-animation:tips .5s linear both,tipsHide .5s 3s linear forwards;animation:tips .5s linear both,tipsHide .5s 3s linear forwards;}
+@-webkit-keyframes tips{from {-webkit-transform:translateY(-100%);opacity:0}to { -webkit-transform:translateY(0%);opacity:1;}}
+@keyframes tips{from{-webkit-transform:translateY(-100%);opacity:0}to{ -webkit-transform:translateY(0%);opacity:1;}}
+@-webkit-keyframes tipsHide{from{-webkit-transform:translateY(0%);opacity:1}to{-webkit-transform:translateY(-100%);opacity:0;}}
+@keyframes tipsHide{from{-webkit-transform:translateY(0%);opacity:1}to{-webkit-transform:translateY(-100%);opacity:0;}}
+
+.bgbox{background:#ebebeb; text-align:center;color:#666;line-height:.8rem;}
+.list{line-height: .8rem;margin-bottom: .2rem; position: relative;}
+.right{padding:0 .4rem;}
+
+
+.list2 .pic{position: relative;margin-right:.2rem;}
+.list2 .pic img{width:1rem;height:1rem;}
+.list2 .pic .num,.num{display:inline-block;width:.4rem;height:.4rem; text-align:center; line-height: .4rem; border-radius:50%; background:#F43530;color:#fff; font-size:.2rem;}
+.list2 .pic .num{position: absolute;top:-.2rem;right:-.2rem;}
+.list2{padding: 10px 15px;position: relative; font-size:.3rem;line-height: 1.5;}
+.list2 h3{font-size:.28rem;}
+.list2 p{font-size:.24rem; color:#666;}
+
+ul.list{border-radius:5px;background-color:#eee;}
+.list li{margin:5px;padding:10px;border-radius:5px;background:#aaa;text-align:center;}
+
+
+.two{
+	overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: .2rem;
+}
+
+.list3{
+	-webkit-justify-content:center;
+	justify-content:center;
+}
+
+.list4{
+	-webkit-justify-content:space-between;
+	justify-content:space-between;
+}
+
+.list5{
+	-webkit-justify-content:space-around;
+	justify-content:space-around;
+}
+
+.list6{
+	-webkit-justify-content:flex-end;
+	justify-content:flex-end;
+}
+
+.list7 li{
+	width:.7rem;
+}
+.list7{
+	-webkit-flex-wrap:wrap;
+	flex-direction:wrap;
+	-webkit-align-content:flex-start;
+	align-content:flex-start;
+}
+
+.mwin{
+	padding-right: 13px;
+    position: relative;
+    text-align: right;
+    color: #999999;
+    margin-right:.3rem;
+}
+.mwin::after{
+	content: " ";
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-width: 2px 2px 0 0;
+    border-color: #C8C8CD;
+    border-style: solid;
+    -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: relative;
+    top:-2px;
+    position: absolute;
+    top: 50%;
+    margin-top: -4px;
+    right: 2px;
+}
+
+.mwbox{
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+.mwflex{
+	-webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+.mwcenter{
+	-webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.mwmiddle{
+
+}
+</style>
+<script type="text/javascript">
+  var devieWidth=Math.min(750,document.documentElement.clientWidth);
+  document.documentElement.style.fontSize=devieWidth/7.5+'px';
+</script>
+<script type="text/javascript" src="zepto.min.js"></script>
+<script>
+var _stop=true;
+
+function onMsg(msg){
+	var _timer=null;
+	if($("#cmTips").length){
+		clearTimeout(_timer);
+		$("#cmTips").remove();
+	};
+	var oHtml = [];
+	oHtml.push('<section id="cmTips" class="cmTips">');
+	oHtml.push('  <p>'+msg+'</p>');
+	oHtml.push('</section>');
+
+	$("body").append(oHtml.join("")).find("#cmTips").addClass('show');
+	_timer = setTimeout(function(){
+		$("#cmTips").remove();
+	},4000);
+}
+
+
+window.addEventListener("load", function () {
+	
+	var selectImg = document.querySelector("#select-img");
+	var tip = document.querySelector(".tip");
+
+	$('#loading').hide();
+	//onMsg('进入页面');
+
+    
+}, false);
+</script>
+</head>
+
+<body>
+<section class="zz" id="loading" style="display:block;">
+  <div class="loading"></div>
+</section>
+
+<p>两行隐藏</p>
+<div class="two">嗨哩啪啪啪丨牟犊儿嗨哩啪啪啪丨牟犊儿 带你到丽江束河古镇街头撩妹 带你到丽江束河古镇街头撩妹嗨哩啪啪啪丨牟犊儿 带你到丽江束河古镇街头撩妹</div>
+
+<div class="mwbox list">
+	<div class="mwflex">
+		<div class="bgbox">左右对齐</div>
+	</div>
+	<div class="right">
+		<span>详细信息</span>
+	</div>
+	<div class="mwin"></div>
+</div>
+
+<div class="mwbox mwcenter list list2">
+	<div class="pic">
+		<img src="pic.jpg"/>
+		<span class="num">8</span>
+	</div>
+	<div class="mwflex">
+		<h3>垂直居中</h3>
+		<p>摘要信息</p>
+	</div>	
+</div>
+
+<ul class="mwbox list list3">
+	<li>a</li>
+	<li>b</li>
+	<li>c</li>
+</ul>
+
+<ul class="mwbox list list4">
+	<li>a</li>
+	<li>b</li>
+	<li>c</li>
+</ul>
+
+<ul class="mwbox list list5">
+	<li>a</li>
+	<li>b</li>
+	<li>c</li>
+</ul>
+
+<ul class="mwbox list list6">
+	<li>a</li>
+	<li>b</li>
+	<li>c</li>
+</ul>
+
+<ul class="mwbox list list7">
+	<li>a</li>
+	<li>b</li>
+	<li>c</li>
+	<li>d</li>
+	<li>e</li>
+	<li>f</li>
+	<li>g</li>
+	<li>h</li>
+	<li>j</li>
+</ul>
+
+
+</body>
+</html>
