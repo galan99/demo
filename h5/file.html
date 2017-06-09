@@ -48,6 +48,8 @@ body{font-size:.3rem;}
 @keyframes tips{from{-webkit-transform:translateY(-100%);opacity:0}to{ -webkit-transform:translateY(0%);opacity:1;}}
 @-webkit-keyframes tipsHide{from{-webkit-transform:translateY(0%);opacity:1}to{-webkit-transform:translateY(-100%);opacity:0;}}
 @keyframes tipsHide{from{-webkit-transform:translateY(0%);opacity:1}to{-webkit-transform:translateY(-100%);opacity:0;}}
+
+.mwbtn{width:calc(100% - 20px - 2rem); margin:0 auto; line-height:.8rem;border-radius:.08rem;color:#fff; background:#179B16; text-align:center;}
 </style>
 <script type="text/javascript">
   var devieWidth=Math.min(640,document.documentElement.clientWidth);
@@ -245,5 +247,9 @@ window.addEventListener("load", function () {
 <label for="select-img" class="btn" max="5">选择图片</label>
 <input id="select-img" type="file" />
 <p class="tip"></p>
+
+
+<div class="mwbtn">按钮+（calc计算css）</div>
+
 </body>
 </html>
