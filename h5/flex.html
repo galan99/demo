@@ -123,6 +123,33 @@ ul.list{border-radius:5px;background-color:#eee;}
 }
 
 .mwbtn{width:calc(100% - 20px - 2rem); /*calc 运算符两边要有空格*/ margin:0 auto .2rem; line-height:.8rem;border-radius:.08rem;color:#fff; background:#179B16; text-align:center;}
+svg{
+	-webkit-transform: rotate(-91deg);
+	transform: rotate(-91deg);
+	position: fixed;
+	width:100%;
+	height: 100%;
+	z-index: 100;
+}
+.log{
+	position: fixed;
+	width:100%;
+	height: 100%;
+	z-index: 110;
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+	-webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content:center;
+	justify-content:center;
+}
+circle{
+   /*  -webkit-transition: stroke-dasharray 5s;
+      transition: stroke-dasharray 5s;  */   
+}
+.all{display: none;}
 </style>
 <script type="text/javascript">
   var devieWidth=Math.min(750,document.documentElement.clientWidth);
@@ -158,6 +185,26 @@ window.addEventListener("load", function () {
 	$('#loading').hide();
 	//onMsg('进入页面');
 
+	var AllBox=document.querySelectorAll('.all')[0];
+	var svg=document.querySelector('svg');
+	var percent=0;
+	var perimeter = Math.PI * 2 * 50;	
+	var circle = document.querySelectorAll("circle")[1];
+	
+
+	var timer=setInterval(function(){
+		percent=(percent*10+1)/10;
+		console.log(percent)
+		if(percent>=1){
+			percent=1;
+			svg.style.display="none";
+			document.querySelector('.log').style.display="none";
+			AllBox.style.display="block";
+			clearInterval(timer);
+		}
+		document.querySelector('.scale').innerHTML=percent*100;
+		circle.setAttribute('stroke-dasharray', perimeter * percent + " " + perimeter * (1- percent));
+	},80)
     
 }, false);
 </script>
@@ -168,64 +215,72 @@ window.addEventListener("load", function () {
   <div class="loading"></div>
 </section>
 
-<p>两行隐藏</p>
-<div class="two">嗨哩啪啪啪丨牟犊儿嗨哩啪啪啪丨牟犊儿 带你到丽江束河古镇街头撩妹 带你到丽江束河古镇街头撩妹嗨哩啪啪啪丨牟犊儿 带你到丽江束河古镇街头撩妹</div>
+<div class="log"><span class="scale">0</span>%</div>
+<svg viewBox="0 0 400 400">
+    <circle cx="200" cy="200" r="50" stroke-width="5" stroke="#D1D3D7" fill="none"></circle>
+    <circle cx="200" cy="200" r="50" stroke-width="5" stroke="#00A5E0" fill="none" stroke-dasharray="0 628"></circle>
+</svg>
 
-<div class="mwbtn">按钮+（calc计算css）</div>
+<div class="all">
 
-<div class="mwbox list">
-	<div class="mwflex">
-		<div class="bgbox">左右对齐</div>
+	<p>两行隐藏</p>
+	<div class="two">嗨哩啪啪啪丨牟犊儿嗨哩啪啪啪丨牟犊儿 带你到丽江束河古镇街头撩妹 带你到丽江束河古镇街头撩妹嗨哩啪啪啪丨牟犊儿 带你到丽江束河古镇街头撩妹</div>
+
+	<div class="mwbtn">按钮+（calc计算css）</div>
+
+	<div class="mwbox list">
+		<div class="mwflex">
+			<div class="bgbox">左右对齐</div>
+		</div>
+		<div class="right">
+			<span>详细信息</span>
+		</div>
+		<div class="mwin"></div>
 	</div>
-	<div class="right">
-		<span>详细信息</span>
+
+	<div class="mwbox mwcenter list list2">
+		<div class="pic">
+			<img src="pic.jpg"/>
+			<span class="num">8</span>
+		</div>
+		<div class="mwflex">
+			<h3>垂直居中</h3>
+			<p>摘要信息</p>
+		</div>	
 	</div>
-	<div class="mwin"></div>
+
+	<ul class="mwbox list list3">
+		<li>a</li>
+		<li>b</li>
+		<li>c</li>
+	</ul>
+
+	<ul class="mwbox list list4">
+		<li>a</li>
+		<li>b</li>
+		<li>c</li>
+	</ul>
+
+	<ul class="mwbox list list5">
+		<li>a</li>
+		<li>b</li>
+		<li>c</li>
+	</ul>
+
+	<ul class="mwbox list list6">
+		<li>a</li>
+		<li>b</li>
+		<li>c</li>
+	</ul>
+
+	<ul class="mwbox list list7">
+		<li>a</li>
+		<li>b</li>
+		<li>c</li>
+		<li>d</li>
+		<li>e</li>
+	</ul>
+
 </div>
-
-<div class="mwbox mwcenter list list2">
-	<div class="pic">
-		<img src="pic.jpg"/>
-		<span class="num">8</span>
-	</div>
-	<div class="mwflex">
-		<h3>垂直居中</h3>
-		<p>摘要信息</p>
-	</div>	
-</div>
-
-<ul class="mwbox list list3">
-	<li>a</li>
-	<li>b</li>
-	<li>c</li>
-</ul>
-
-<ul class="mwbox list list4">
-	<li>a</li>
-	<li>b</li>
-	<li>c</li>
-</ul>
-
-<ul class="mwbox list list5">
-	<li>a</li>
-	<li>b</li>
-	<li>c</li>
-</ul>
-
-<ul class="mwbox list list6">
-	<li>a</li>
-	<li>b</li>
-	<li>c</li>
-</ul>
-
-<ul class="mwbox list list7">
-	<li>a</li>
-	<li>b</li>
-	<li>c</li>
-	<li>d</li>
-	<li>e</li>
-</ul>
-
-
 </body>
 </html>
