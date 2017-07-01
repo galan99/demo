@@ -152,8 +152,16 @@ circle{
 .all{display: none;}
 </style>
 <script type="text/javascript">
-  var devieWidth=Math.min(750,document.documentElement.clientWidth);
-  document.documentElement.style.fontSize=devieWidth/7.5+'px';
+function setResize(){
+	var devieWidth=Math.min(750,document.documentElement.clientWidth);
+	document.documentElement.style.fontSize=devieWidth/7.5+'px';
+}
+setResize()
+window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function (e) {
+    setTimeout(function () {
+        setResize();
+    }, 200)
+}, false);
 </script>
 <script type="text/javascript" src="zepto.min.js"></script>
 <script>
