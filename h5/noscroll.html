@@ -86,7 +86,7 @@ name="viewport"/>
 <div class="mask"></div>
 <div class="content"></div>   
 <script>
-    //源码：http://www.html-js.cn/details/EJ66aDJVW.html
+    //源码：http://www.zhangxinxu.com/wordpress/2016/12/web-mobile-scroll-prevent-window-js-css/
     function preventDefault(e) {
         e = e || window.event;
         e.preventDefault && e.preventDefault();
@@ -96,7 +96,7 @@ name="viewport"/>
     function enableScroll(){
         $(document).off('mousewheel', preventDefault);
         $(document).off('touchmove', preventDefault);
-        $(document.body).css({ "overflow-y": "auto", 'position': 'static', 'top': 'auto' });
+        $(document.body).css({ "overflow-y": "auto", 'position': 'static'});
     }
 
     window.onload=function(){
@@ -111,7 +111,6 @@ name="viewport"/>
         };
 
         btn.onclick=function(e){
-            $('body').addClass('noscroll');
             $('.mask,.content').show();
 
             //针对弹窗内文本的滚动
@@ -130,7 +129,7 @@ name="viewport"/>
             // 仿innerScroll方法
             $(_alertBodyObj)[0].addEventListener('touchmove', function (e) {
                 e.stopPropagation();
-                $(document.body).css({ "overflow-y": "hidden", 'position': 'fixed', 'top': 0 });
+                $(document.body).css({ "overflow-y": "hidden", 'position': 'fixed'});
 
                 var deltaX = e.changedTouches[0].pageX - startX;
                 var deltaY = e.changedTouches[0].pageY - startY;
