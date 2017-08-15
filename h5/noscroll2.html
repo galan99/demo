@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0;"
+name="viewport"/>
+<title>弹出层禁用body滚动条</title>
+<style>
+*{
+    padding:0;
+    margin:0;    
+}
+.btn{
+    background-color: #1AAD19;
+    color:#fff;
+    position: relative;
+    display: block;
+    margin:20px;
+    padding-left: 14px;
+    padding-right: 14px;
+    box-sizing: border-box;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    line-height: 2.55555556;
+    border-radius: 5px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    overflow: hidden;
+}
+
+.content{
+    -webkit-overflow-scrolling: touch;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    border-radius: 6px;
+}
+
+
+
+body.modal-open {
+    position: fixed;
+    width: 100%;
+}
+.text-center{
+    text-align: center;
+}
+.modal {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed; 
+  top: 0; 
+  right: 0; 
+  bottom: 0; 
+  left: 0;
+  display: none;
+}
+.modal .modal-frame{
+  position: absolute;
+  left:10%;
+  right:10%; 
+  top: 50%; 
+  transform: translateY(-50%);
+  border: solid 1px #ddd; 
+  background: #fff;
+  padding: 1em;
+  -webkit-overflow-scrolling: touch;
+}
+
+</style>
+<script src="zepto.min.js"></script>
+<script _src="vconsole.js"></script>
+</head>
+<body>
+<div class="text-center">
+    <a class="js-open-modal btn" href="javascript:" rel="external">打开弹窗1</a>
+    <div>请使用手机浏览</div>
+    <p>你所拥有的只是现在。内心的平静，工作的成效，都决定于我们如何活到现在这一刻。不论昨天曾经发生过多少事，也不论明天有什么即将来临，你永远置身“现在”。从这个观点来看，快乐与满足的秘诀，就是全心全意集中于现在的每一分、每一秒之上。</p>
+    <p>小孩子最美妙的一点，就是他们会完全沉浸于现在的片刻里。不论是观察甲虫、画画、筑沙堡或从事任何活动，他们都能做到全神贯注。</p>
+    <p>高中生想：“有朝一日，我毕了业，不必再听师长的训，日子就好过了！”他毕业之后，又觉得必须离开这个家才能找到真正的快乐。离家进入大学后，他又暗下决定：“拿到学位就好了！”好不容易领到文凭，这时他却又发现，快乐要等找到工作才能实现。</p>
+    <p>他找了份工作。不消说，快乐还轮不到他。一年一年过去了，他不断把获得快乐和心灵平静的日期往后挪，直到他订婚、结婚、买房子、换一份更好的工作、退休……最后在享受至高无上的快乐之前，他就去世了。他把所有的现在都用于计划一个永远没有实现的美好未来。</p>
+    <p>你听了这样的故事，觉得心有戚戚焉吗？你认识一些永远把快乐留到未来的人吗？快乐的秘密，说穿了很简单，你的生活必须以现在为中心，我们要在生命的旅途中享受快乐，而不是把它留到终点才用。</p>
+    <p>活到现在，也就是我们从现在从事的每件工作本身找的乐趣，而不只是期待它最后的结果。如果你正在粉刷家中阳台，刷子的每一笔，都该令你感到愉快，帮助你学习如何做好这份工作。你该享受拂面的春风，听院中小鸟唱歌，以及周边的一切。</p>
+    <p>为了活到现在，我们该扩张自己的感官，体会现在这每一刻的种种美妙之处。每一分，每一秒，每个人都可以自由的选择，是否要真正生活到现在，吸收周围的一切，让自己受感动，受影响。</p>
+    <div style="height:50px"></div>
+    <a class="js-open-modal btn" href="javascript:" rel="external">打开弹窗2</a>
+    <p>你所拥有的只是现在。内心的平静，工作的成效，都决定于我们如何活到现在这一刻。不论昨天曾经发生过多少事，也不论明天有什么即将来临，你永远置身“现在”。从这个观点来看，快乐与满足的秘诀，就是全心全意集中于现在的每一分、每一秒之上。</p>
+    <p>小孩子最美妙的一点，就是他们会完全沉浸于现在的片刻里。不论是观察甲虫、画画、筑沙堡或从事任何活动，他们都能做到全神贯注。</p>
+    <p>高中生想：“有朝一日，我毕了业，不必再听师长的训，日子就好过了！”他毕业之后，又觉得必须离开这个家才能找到真正的快乐。离家进入大学后，他又暗下决定：“拿到学位就好了！”好不容易领到文凭，这时他却又发现，快乐要等找到工作才能实现。</p>
+    <p>他找了份工作。不消说，快乐还轮不到他。一年一年过去了，他不断把获得快乐和心灵平静的日期往后挪，直到他订婚、结婚、买房子、换一份更好的工作、退休……最后在享受至高无上的快乐之前，他就去世了。他把所有的现在都用于计划一个永远没有实现的美好未来。</p>
+    <p>你听了这样的故事，觉得心有戚戚焉吗？你认识一些永远把快乐留到未来的人吗？快乐的秘密，说穿了很简单，你的生活必须以现在为中心，我们要在生命的旅途中享受快乐，而不是把它留到终点才用。</p>
+    <p>活到现在，也就是我们从现在从事的每件工作本身找的乐趣，而不只是期待它最后的结果。如果你正在粉刷家中阳台，刷子的每一笔，都该令你感到愉快，帮助你学习如何做好这份工作。你该享受拂面的春风，听院中小鸟唱歌，以及周边的一切。</p>
+    <p>为了活到现在，我们该扩张自己的感官，体会现在这每一刻的种种美妙之处。每一分，每一秒，每个人都可以自由的选择，是否要真正生活到现在，吸收周围的一切，让自己受感动，受影响。</p>
+    <div style="height:100px"></div>
+</div>
+<div id="modal" class="modal">
+  <div class="modal-frame">
+    <div style="height:9em;overflow-y:auto;">
+    这里是可滚动内容<br>
+    <p>
+        也就是说对 Webkit 来说，无论是混杂模式还是标准模式，它都认为页面滚动元素是BODY；而其它浏览器只有在混杂模式下，才会认为页面滚动元素是BODY，标准模式下则是HTML。
+        各种 JS 库通常都会抹平不同浏览器及不同模式下的这些差异，统一提供获取或设置 scrollTop / scrollLeft 的接口，所以这个问题往往不会暴露出来。具体的兼容方案很简单，略过不提。但需要注意一点，千万不要使用 UA 检测来解决这个问题，如果针对 UA 包含webkit的浏览器统一使用 document.body 那就有问题，后面会讲到原因。
+        最近我发现了一个诡异的现象：在我的 Chrome 里需要通过 document.documentElement 元素获取页面滚动条位置。原本我以为是 Chrome 修改了实现，保持跟标准一致；但奇怪的是，我的 Chrome Canary 还是老样子，别人跟我版本一致的 Chrome 也还是老样子。
+        为了彻底搞明白这件事情，我在 Chromium Bug 系统中开始了搜索。很快，我找到一个描述这个问题的BUG 记录。这条记录最后回复更新于几天前，说受其它问题影响，这个 BUG 虽然已经修复，但是并没有推到主版本。实际上，Chromium 团队发现改为标准实现后，一些广泛使用的扩展和一些大站会受影响，所以决定先放一放。
+    </p>
+    </div>
+  </div>
+</div>
+
+<script>
+    window.onload=function(){
+        var con=document.querySelector('.content');
+
+        $(".mask").on("touchmove",function(e){
+            //e.preventDefault && e.preventDefault();
+        }, false)     
+    };
+</script>
+<script type="text/javascript">
+//源码：https://uedsky.com/2016-06/mobile-modal-scroll/
+(function() {
+  var ModalHelper = (function(bodyCls) {
+    var scrollTop;
+    var scrollElement=document.scrollingElement || docuemnt.body;
+    return {
+      afterOpen: function() {
+        scrollTop = scrollElement.scrollTop;
+        document.body.classList.add(bodyCls);
+        document.body.style.top = -scrollTop + 'px';
+      },
+      beforeClose: function() {
+        document.body.classList.remove(bodyCls);
+        scrollElement.scrollTop = scrollTop;
+      }
+    };
+  })('modal-open');
+
+  function openModal() {
+    document.getElementById('modal').style.display = 'block';
+    ModalHelper.afterOpen();
+  }
+  function closeModal() {
+    ModalHelper.beforeClose();
+    document.getElementById('modal').style.display = 'none';
+  }
+  var btns = document.querySelectorAll('.js-open-modal');
+  btns[0].onclick = openModal;
+  btns[1].onclick = openModal;
+  document.querySelector('#modal').onclick = closeModal;
+})();
+</script>
+</body>
+</html>
