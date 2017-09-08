@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>上传图片生成</title>
+<style>
+*{padding:0;margin:0;font-size:16px;}
+body {
+  font-size:16px;
+}
+img{max-width:100%;}
+.imgDom{
+    display: none;
+    position: relative;
+    z-index: 6;
+    left: 50%;
+    width: 5rem;
+    height: 7.6rem;
+    background-image:url('img/imgBox.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    box-shadow: 5px 5px 25px #000;
+    margin-bottom: 20px;
+}
+.donePhoto{
+    position: absolute;
+    top:0px;
+    left: 0;
+    z-index: 100;
+}
+.selfPic{
+    position: absolute;
+    top:.12rem;
+    left: .12rem;
+    width: 2.22rem;
+    height: 2.64rem;
+    z-index: 99;
+}
+.selfPic>img{
+    width: 100%;
+    height: 100%;
+}
+.code{
+    position: absolute;
+    bottom: .1rem;
+    left: .1rem;
+    width: 1.98rem;
+    height: .84rem;
+}
+.selfNd {
+    position: absolute;
+    bottom: .1rem;
+    right: .12rem;
+    color: #3c2f23;
+    font-size: 12px;
+}
+
+.showpic{
+    text-align: center;
+    width:5.6rem;
+    margin:0 auto;
+    overflow: hidden;
+}
+.showpic img{
+    width:100%;
+}
+.btn,.btn_upload{
+    display: block;
+    width: calc(100% - 20px);
+    margin:20px auto;
+    line-height: 50px;
+    height: 50px;
+    border-radius: 8px;
+    color: #fff;
+    background: #179B16;
+    text-align: center;
+    position: relative;
+}
+.btn_upload input{
+    opacity: 0;
+    position: absolute;;
+    left:0;
+    top:0;
+    width: 100%;
+    height:100%;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+</style>
+<script type="text/javascript">
+    var devieWidth=Math.min(750,document.documentElement.clientWidth);
+    document.documentElement.style.fontSize=devieWidth/7.5+'px';
+</script>
+</head>
+<body>
+
+<div class="imgDom">
+    <div class="selfPic"><img src="" crossorigin="anonymous"></div>
+    <div class="code"><img src="img/code.png"></div>
+    <div class="selfNd">军服所属年代:2000-2017</div>
+</div>
+
+<div class="showpic">
+    <img class="cspic" src="">    
+</div>
+<div class="btn_upload">
+    <input type="file" id="btn_upload" accept="image/*" onchange="selectFileImage(this);">
+    <span>上传图片</span>
+</div>
+<div class="btn">生成图片</div>
+
+<noscript src="http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=2.5.2" type="text/javascript"></noscript>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="exif.js"></script>
+<script type="text/javascript" src="uploadImage.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $('.btn').on('click',function(){
+        picToCanvas($(".imgDom"));
+    });
+
+    function picToCanvas($dom) {       
+        var img1 = new Image();
+        var img2 = new Image();
+        var bg = new Image();
+        var loaded = 0;
+        var onLoad = function() {
+            // alert(this.src);
+            var that=this;
+
+            loaded += 1;
+            if (loaded == 3) {
+                ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+                var $img1 = $dom.find('.selfPic img');               
+                ctx.drawImage(img1, 24, 24, 400, img1.height/img1.width*400);
+
+                var $img2 = $dom.find('.code img');
+                ctx.drawImage(img2, 24, 510, 397, 166);
+
+                ctx.font = '20px 微软雅黑';
+                ctx.textAlign = "right";
+                ctx.fillText($dom.find('.selfNd').text(), 422, 694 - 20);
+
+                finish();
+            }
+        };
+        // img1.crossOrigin = "anonymous";
+        // img2.crossOrigin = "anonymous";
+        // bg.crossOrigin = "anonymous";
+
+        if(!$dom.find('.selfPic img').attr('src')){
+            $dom.find('.selfPic img').attr('src','img/lian.jpg')
+        }
+
+        img1.onload = onLoad;
+        img2.onload = onLoad;
+        bg.onload = onLoad;        
+        img1.src = $dom.find('.selfPic img').attr('src');
+        img2.src = 'img/code.png';
+        bg.src = 'img/imgBox.jpg';
+        
+        // img1.crossOrigin = "anonymous";
+        // img2.crossOrigin = "anonymous";
+        // bg.crossOrigin = "anonymous";
+
+        var $canvas = $("<canvas/>").attr('width', 446).attr('height', 694);
+        var canvas = $canvas.get(0);
+        var ctx = canvas.getContext('2d');
+
+        var finish = function () {
+            var dataUrl = $canvas.get(0).toDataURL("image/png");
+            var newImg = document.createElement("img");
+            newImg.className = "donePhoto";
+            newImg.crossOrigin = 'anonymous';
+            newImg.src = dataUrl;
+            $(newImg).css('width', '100%');
+            $dom.append(newImg);
+            //alert("您的军装照生成成功，赶紧分享吧！");
+
+        }
+
+        $('.showpic').hide();
+        $('.imgDom').show();
+    }
+</script>
+</body>
+</html>
