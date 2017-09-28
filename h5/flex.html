@@ -13,7 +13,7 @@ h3{font-weight: normal;}
 li{list-style:none;}
 body{width:7.5rem;margin:0 auto; overflow-x:hidden;font-size:.3rem;}
 /*loading*/
-.zz{display:none;position:fixed;left:0;top:0;right:0;bottom:0;background: rgba(0,0,0,.5);z-index:9999;}
+.zz{display:block;position:fixed;left:0;top:0;right:0;bottom:0;background: rgba(0,0,0,.5);z-index:9999;}
 .zz>p{position:absolute;left:0;top:35%;width:100%;text-align:center;color:#fff;}
 .loading{width:30px;height:30px;border:1px #fff solid;border-radius:50%;-webkit-animation: rotation 1s ease-in-out infinite;animation: rotation 1s ease-in-out infinite;margin:130px auto;}
 .loading:after{width:5px;height:5px;background-color:rgba(255,255,255,1);border-radius:100%;position:absolute;content: "";}
@@ -123,7 +123,7 @@ ul.list{border-radius:5px;background-color:#eee;}
 }
 
 .mwbtn{width:calc(100% - 20px - 2rem); /*calc 运算符两边要有空格*/ margin:0 auto .2rem; line-height:.8rem;border-radius:.08rem;color:#fff; background:#179B16; text-align:center;}
-svg{
+.svg_box svg{
 	-webkit-transform: rotate(-91deg);
 	transform: rotate(-91deg);
 	position: fixed;
@@ -131,7 +131,7 @@ svg{
 	height: 100%;
 	z-index: 100;
 }
-.log{
+.svg_box .log{
 	position: fixed;
 	width:100%;
 	height: 100%;
@@ -145,89 +145,27 @@ svg{
     -webkit-justify-content:center;
 	justify-content:center;
 }
-circle{
+.svg_box circle{
    /*  -webkit-transition: stroke-dasharray 5s;
-      transition: stroke-dasharray 5s;  */   
+      transition: stroke-dasharray 5s;  */  
 }
+.svg_box{display: none;}
 .all{display: none;}
 </style>
-<script type="text/javascript">
-function setResize(){
-	var devieWidth=Math.min(750,document.documentElement.clientWidth);
-	document.documentElement.style.fontSize=devieWidth/7.5+'px';
-}
-setResize()
-window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function (e) {
-    setTimeout(function () {
-        setResize();
-    }, 200)
-}, false);
-</script>
-<script type="text/javascript" src="zepto.min.js"></script>
-<script>
-var _stop=true;
-
-function onMsg(msg){
-	var _timer=null;
-	if($("#cmTips").length){
-		clearTimeout(_timer);
-		$("#cmTips").remove();
-	};
-	var oHtml = [];
-	oHtml.push('<section id="cmTips" class="cmTips">');
-	oHtml.push('  <p>'+msg+'</p>');
-	oHtml.push('</section>');
-
-	$("body").append(oHtml.join("")).find("#cmTips").addClass('show');
-	_timer = setTimeout(function(){
-		$("#cmTips").remove();
-	},4000);
-}
-
-
-window.addEventListener("load", function () {
-	
-	var selectImg = document.querySelector("#select-img");
-	var tip = document.querySelector(".tip");
-
-	$('#loading').hide();
-	//onMsg('进入页面');
-
-	var AllBox=document.querySelectorAll('.all')[0];
-	var svg=document.querySelector('svg');
-	var percent=0;
-	var perimeter = Math.PI * 2 * 50;	
-	var circle = document.querySelectorAll("circle")[1];
-	
-
-	var timer=setInterval(function(){
-		percent=(percent*10+1)/10;
-		console.log(percent)
-		if(percent>=1){
-			percent=1;
-			svg.style.display="none";
-			document.querySelector('.log').style.display="none";
-			AllBox.style.display="block";
-			clearInterval(timer);
-		}
-		document.querySelector('.scale').innerHTML=percent*100;
-		circle.setAttribute('stroke-dasharray', perimeter * percent + " " + perimeter * (1- percent));
-	},80)
-    
-}, false);
-</script>
 </head>
 
 <body>
-<section class="zz" id="loading" style="display:block;">
+<section class="zz" id="loading">
   <div class="loading"></div>
 </section>
 
-<div class="log"><span class="scale">0</span>%</div>
-<svg viewBox="0 0 400 400">
-    <circle cx="200" cy="200" r="50" stroke-width="5" stroke="#D1D3D7" fill="none"></circle>
-    <circle cx="200" cy="200" r="50" stroke-width="5" stroke="#00A5E0" fill="none" stroke-dasharray="0 628"></circle>
-</svg>
+<div class="svg_box">
+	<div class="log"><span class="scale">0</span>%</div>
+	<svg viewBox="0 0 400 400">
+	    <circle cx="200" cy="200" r="50" stroke-width="5" stroke="#D1D3D7" fill="none"></circle>
+	    <circle cx="200" cy="200" r="50" stroke-width="5" stroke="#00A5E0" fill="none" stroke-dasharray="0 628"></circle>
+	</svg>
+</div>
 
 <div class="all">
 
@@ -288,7 +226,78 @@ window.addEventListener("load", function () {
 		<li>d</li>
 		<li>e</li>
 	</ul>
-
 </div>
+
+<script type="text/javascript">
+function setResize(){
+	var devieWidth=Math.min(750,document.documentElement.clientWidth);
+	document.documentElement.style.fontSize=devieWidth/7.5+'px';
+}
+setResize()
+window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function (e) {
+    setTimeout(function () {
+        setResize();
+    }, 200)
+}, false);
+</script>
+<script type="text/javascript" src="zepto.min.js"></script>
+<script>
+var _stop=true;
+
+function onMsg(msg){
+	var _timer=null;
+	if($("#cmTips").length){
+		clearTimeout(_timer);
+		$("#cmTips").remove();
+	};
+	var oHtml = [];
+	oHtml.push('<section id="cmTips" class="cmTips">');
+	oHtml.push('  <p>'+msg+'</p>');
+	oHtml.push('</section>');
+
+	$("body").append(oHtml.join("")).find("#cmTips").addClass('show');
+	_timer = setTimeout(function(){
+		$("#cmTips").remove();
+	},4000);
+}
+
+
+window.addEventListener("load", function () {
+	
+	var selectImg = document.querySelector("#select-img");
+	var tip = document.querySelector(".tip");
+
+	
+	onMsg('进入页面');
+	$('.all').show();
+	setTimeout(function(){
+		$('#loading').hide();
+	},1000)
+
+	var AllBox=document.querySelectorAll('.all')[0];
+	var svg=document.querySelector('svg');
+	var percent=0;
+	var perimeter = Math.PI * 2 * 50;	
+	var circle = document.querySelectorAll("circle")[1];
+
+		
+	function svgShow(){
+		var timer=setInterval(function(){
+			percent=(percent*10+1)/10;
+			console.log(percent)
+			if(percent>=1){
+				percent=1;
+				svg.style.display="none";
+				document.querySelector('.log').style.display="none";
+				AllBox.style.display="block";
+				clearInterval(timer);
+			}
+			document.querySelector('.scale').innerHTML=percent*100;
+			circle.setAttribute('stroke-dasharray', perimeter * percent + " " + perimeter * (1- percent));
+		},80)
+	}
+    
+}, false);
+</script>
 </body>
 </html>
