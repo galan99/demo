@@ -152,6 +152,19 @@ ul.list{border-radius:5px;background-color:#eee;}
 .svg_box{display: none;}
 .all{display: none;}
 </style>
+<script type="text/javascript">
+function setResize(){
+      var devieWidth= Math.min(750,document.documentElement.clientWidth,document.documentElement.clientHeight);
+      var fonSize= devieWidth > 1080 ? 144 : devieWidth / 7.5;
+      document.documentElement.style.fontSize=fonSize+'px';
+    }
+    setResize()
+    window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function (e) {
+        setTimeout(function () {
+            setResize();
+        }, 200)
+    }, false);
+</script>
 </head>
 
 <body>
@@ -228,18 +241,6 @@ ul.list{border-radius:5px;background-color:#eee;}
 	</ul>
 </div>
 
-<script type="text/javascript">
-function setResize(){
-	var devieWidth=Math.min(750,document.documentElement.clientWidth);
-	document.documentElement.style.fontSize=devieWidth/7.5+'px';
-}
-setResize()
-window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function (e) {
-    setTimeout(function () {
-        setResize();
-    }, 200)
-}, false);
-</script>
 <script type="text/javascript" src="zepto.min.js"></script>
 <script>
 var _stop=true;
