@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>拖拽</title>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<style>
+*{padding:0;margin:0;}
+body{width:7.5rem;margin:0 auto;position: relative;overflow: hidden;font-size: .32rem;}
+#block {
+	width:100px;
+	height:100px;
+	background-color: red;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+</style>
+<script type="text/javascript">
+function setResize(){
+	var devieWidth= Math.min(750,document.documentElement.clientWidth,document.documentElement.clientHeight);
+	var fonSize= devieWidth > 1080 ? 144 : devieWidth / 7.5;
+	document.documentElement.style.fontSize=fonSize+'px';
+}
+setResize()
+</script>
+</head>
+<body>
+<div>
+	touchstart,touchmove,
+	touchend,touchcancel
+</div>
+<div id="block"></div>
+<script>
+	// 获取节点
+	var block = document.getElementById("block");
+	var oW,
+		oH,
+		maxWidth = document.documentElement.clientWidth - block.offsetWidth,
+		maxHeight = document.documentElement.clientHeight - block.offsetHeight;
+	// 绑定touchstart事件
+	block.addEventListener("touchstart", function(e) {
+		console.log(e);
+		var touches = e.touches[0];
+		oW = touches.clientX - block.offsetLeft;
+		oH = touches.clientY - block.offsetTop;
+		//阻止页面的滑动默认事件
+		document.addEventListener("touchmove",defaultEvent,false);
+	},false)
+
+	block.addEventListener("touchmove", function(e) {
+		var touches = e.touches[0];
+		var oLeft = touches.clientX - oW;
+		var oTop = touches.clientY - oH;
+		oLeft = oLeft<0?0:oLeft;
+        oLeft = oLeft>maxWidth?maxWidth:oLeft;
+        oTop = oTop<0?0:oTop;
+        oTop = oTop>maxHeight?maxHeight:oTop;
+		block.style.left = oLeft + "px";
+		block.style.top = oTop + "px";
+	},false);
+
+	block.addEventListener("touchend",function() {
+		document.removeEventListener("touchmove",defaultEvent,false);
+	},false);
+	function defaultEvent(e) {
+		e.preventDefault();
+	}
+</script>
+</body>
+</html>
