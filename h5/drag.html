@@ -32,6 +32,42 @@ setResize()
 </div>
 <div id="block"></div>
 <script>
+	function startMove(obj,json,fn){       
+        obj.oSpeed = {};
+        for(var attr in json){
+            obj.oSpeed[attr] = 0;
+        }              
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function(){                   
+            var bBtn = true;                  
+            for(var attr in json){                       
+                var iCur = parseInt(getStyle(obj,attr));                      
+                obj.oSpeed[attr] += (json[attr] - iCur)/6;
+                obj.oSpeed[attr] *= 0.75;
+                                       
+                if(  Math.abs(obj.oSpeed[attr])>1 || Math.abs(json[attr] - iCur)>1 ){
+                    bBtn = false;
+                }
+                obj.style[attr] = iCur + obj.oSpeed[attr] + 'px';                       
+            }                    
+            if( bBtn ){
+                clearInterval(obj.timer);
+                for(var attr in json){
+                    obj.style[attr] = json[attr] + 'px';
+                    obj.oSpeed[attr] = 0;                           
+                }                      
+                fn&&fn.call(obj);
+            }                   
+        },15);                
+    }
+    
+    function getStyle(obj,attr){
+        if(obj.currentStyle){
+            return obj.currentStyle[attr];
+        }
+        return getComputedStyle(obj,false)[attr];
+    }
+
 	// 获取节点
 	var block = document.getElementById("block");
 	var oW,
@@ -62,6 +98,7 @@ setResize()
 
 	block.addEventListener("touchend",function() {
 		document.removeEventListener("touchmove",defaultEvent,false);
+		startMove(block,{left:maxWidth})
 	},false);
 	function defaultEvent(e) {
 		e.preventDefault();
