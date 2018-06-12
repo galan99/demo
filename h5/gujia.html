@@ -1,0 +1,138 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>vue 骨架屏</title>
+<style type="text/css">
+*{padding:0;margin:0;}
+.skeleton {
+    padding: .1rem;
+}
+
+.skeleton-head {
+    width: 1rem;
+    height: 1rem;
+    float: left;
+}
+
+.skeleton-body {
+    margin-left: 1.1rem;
+}
+
+.skeleton-title {
+    width: 5rem;
+    height: .6rem;
+}
+
+.skeleton-content {
+    width: 2.6rem;
+    height: .3rem;
+    margin-top: .1rem;
+}
+
+.skeleton .skeleton-head,
+.skeleton .skeleton-title,
+.skeleton .skeleton-content {
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 14rem 14rem;
+    animation: skeleton-stripes 1s linear infinite;
+}
+
+@keyframes skeleton-stripes {
+    from {
+        background-position: 0 0 ;
+    }
+    to {
+        background-position: 14rem 0;
+    }
+}
+
+.items{
+    padding-left:1rem;
+}
+.items h2{
+	font-size: .24rem;
+	line-height: .6rem;
+}
+.items p{
+	font-size: .24rem;
+	height: .3rem;
+	line-height: .3rem;
+    margin-top: .1rem;
+}
+</style>
+</head>
+<script type="text/javascript">
+	var devieWidth= Math.min(750,document.documentElement.clientWidth,document.documentElement.clientHeight);
+	var fonSize= devieWidth > 1080 ? 144 : devieWidth / 7.5;
+	document.documentElement.style.fontSize=fonSize+'px'
+</script>
+<body>
+
+<div id="app">
+  <div v-for="user in users" class="items" v-if="loading">
+    <user-item :name="user.name" :email="user.email"></user-item>
+  </div>
+  <div v-for="load in loades" v-if="!loading">
+    <loading-item></loading-item>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script type="text/javascript">
+	Vue.component('user-item', {
+	  props: ['email', 'name'],
+	  template: `<div>
+	      <h2 v-text="name"></h2>
+	      <p v-text="email"></p>
+	    </div>`
+	})
+
+	Vue.component('loading-item', {
+	  template: `<div class="skeleton">
+		    <div class="skeleton-head"></div>
+		    <div class="skeleton-body">
+		        <div class="skeleton-title"></div>
+		        <div class="skeleton-content"></div>
+		    </div>
+		</div>`
+	})
+
+
+	var app = new Vue({
+	  el: '#app',
+	  data: {
+	    users: [],
+	    loading: false,
+	    loades: 10
+	  },
+	  methods: {
+	    getUserDetails: function() {
+	      fetch(`https://jsonplaceholder.typicode.com/users`)
+	        .then(result => result.json())
+	        .then(result => {
+	          this.users = result
+	          this.loading = true
+	        });
+	    }
+	  },
+	  created: function() {
+	    setTimeout(() => {
+	      this.getUserDetails()
+	    }, 1000);
+	  }
+	});
+
+</script>
+</body>
+</html>
+
+
