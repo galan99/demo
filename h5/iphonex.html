@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui, viewport-fit=cover" charset="UTF-8">
+<meta content="telephone=no" name="format-detection" />
+<meta name="msapplication-tap-highlight" content="no">
+<title>点点消下载</title>
+<style>
+body, div, p, ul, li, textarea, form, input, h1, h2, h3, h4, h5, dl, dt, dd, img{ font-family: "Microsoft YaHei", helvetica, arial, "lucida grande", verdana, sans-serif; font-size: 14px; margin: 0; padding: 0; }
+body { color: #333; -webkit-text-size-adjust: none; background-color: #fff; }
+h1, h2, h3, h4, h5, h6 { line-height: normal; font-weight: normal; }
+html { font-size: 100%; overflow-y: auto; -webkit-text-size-adjust: 100%; }
+input:focus { outline: none; -webkit-tap-highlight-color: rgba(0,0,0,0); }
+select:focus{ outline: none; -webkit-tap-highlight-color: rgba(0,0,0,0);}
+input { padding: 0; margin: 0;-webkit-appearance: none;  -webkit-tap-highlight-color: rgba(0,0,0,0); }
+input[type='button']{-webkit-appearance: none; }
+textarea:focus{outline:none;-webkit-appearance: none; }
+a{text-decoration:none;-webkit-tap-highlight-color:transparent;} 
+ul, li { list-style: none; }
+img { max-width: 100%; border:none; vertical-align:top;}
+.zz{
+    position:fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 9999;
+}
+.zz>p{
+    position: absolute;
+    left: 0;
+    top: 35%;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+.loading{
+    width: 30px;
+    height: 30px;
+    border: 1px #fff solid;
+    border-radius: 50%;
+    -webkit-animation: rotation 1s ease-in-out infinite;
+    -moz-animation: rotation 1s ease-in-out infinite;
+    animation: rotation 1s ease-in-out infinite;
+    margin: 130px auto;
+}
+.loading:after{
+    width: 5px;
+    height: 5px;
+    background-color: rgba(255,255,255,1);
+    border-radius: 100%;
+    position: absolute;
+    content: "";
+}
+@-webkit-keyframes rotation{
+    0%{-webkit-transform: rotate(0deg);}
+    100%{-webkit-transform: rotate(360deg);}
+}
+@-moz-keyframes rotation{
+    0%{-moz-transform: rotate(0deg);}
+    100%{-moz-transform: rotate(360deg);}
+}
+@keyframes rotation{
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
+
+/*公共结束*/
+
+html,body{height:100%;}
+.main{height:100%;position:relative; width:6.4rem; margin:0 auto;}
+.popover{display:none;position:absolute;width:100%;height:100%; background:rgba(0,0,0,.6);left:0;top:0;}
+.popovermc{position:absolute;width:4.6rem;min-height:6.8rem;background:#fff;left:50%;margin-left:-2.3rem;top:.9rem; text-align:center;}
+.popovermc h3{line-height:1rem;color:#333; font-size:16px;}
+.popovermc p{padding:0 .4rem; text-align:left; color:#838383;font-size:15px;}
+.popovermc img{width:3.82rem;height:3.82rem;margin-bottom:.4rem;}
+.btncon{position:absolute;left:0;bottom:.5rem;width:5.6rem;margin:0 .4rem;display:-webkit-box;display:flex;display:-webkit-flex;-webkit-justify-content:space-between;justify-content:space-between;}
+.btncon a{display:inline-block;width:2.56rem;height:.91rem;background:url(http://dl.gamdream.com/activity/galan/klddx/ios.png) no-repeat; background-size:100% auto;}
+.btncon a:active{-webkit-transform:translate(2px,2px);transform:translate(2px,2px);}
+.btncon .android{background-image:url(http://dl.gamdream.com/activity/galan/klddx/android.png);}
+.tips-open{display:none;position:fixed;width:100%;height:100%;left:0;top:0; background:rgba(0,0,0,.5); z-index: 5;}
+.tips-open{display:none;color:#fff; text-align:right;background:rgba(0,0,0,.8);}
+.tips-open .tips-txt{text-align:left;padding:0 .1rem;}
+.tips-open img{width:1.5rem;}
+.tips-open .t-close{display:block;width:1.5rem; line-height:.5rem; text-align:center; border:1px solid #fff; border-radius:3px; margin:.2rem auto;}
+
+body{
+	background: #000;
+}
+.main{
+    background:url('http://dl.gamdream.com/activity/galan/klddx/bg.png') no-repeat center;
+    background-size:100% auto; 
+}
+.iphonex body{
+	display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.iphonex .main{
+	height:11.3rem;
+}
+</style>
+<script type="text/javascript">
+	var devieWidth=Math.min(640,document.documentElement.clientWidth);
+	if(document.documentElement.clientHeight/document.documentElement.clientWidth > 1.78){
+		document.documentElement.classList.add('iphonex');
+	}
+	document.documentElement.style.fontSize=devieWidth/6.4+'px';
+</script>
+</head>
+<body>
+<section class="zz" id="loading">
+  <div class="loading"></div>
+</section>
+<section class="main">
+  <div class="btncon">
+  	<a href="https://appsto.re/cn/s49a9.i" class="btn ios"></a><a href="http://dl.gamdream.com/download/apk/ToyBlast-new.apk" class="btn android"></a>
+  </div>
+  <div class="popover">
+  	<div class="popovermc">
+	  	<h3>长按二维码进行下载↓</h3>
+	  	<div class="code"><img class="codepic" src="" data-ios="images/code1.jpg" data-android="images/code2.jpg" alt="二维码"></div>
+	  	<p>如果不能正常下载，点微信右上角按钮，在浏览器中打开后下载.</p>
+  	</div>
+  </div>
+</section>
+<section class="tips-open">
+    <p class="arrow"><img src="http://dl.gamdream.com/activity/galan/klddx/rightTop.png" alt=""></p>
+    <p class="tips-txt">点击右上角按钮并选择【在<span id="client">浏览器</span>中打开】，进行下载！</p>
+    <span class="t-close" id="tipsClose">知道了</span>
+</section>
+<script src="http://dl.gamdream.com/activity/lib/alloy-lever.js"></script>
+<script src="http://dl.gamdream.com/activity/lib/zepto.min.js"></script>
+<script type="text/javascript">
+	var newImage=new Image();
+	newImage.src='http://dl.gamdream.com/activity/galan/klddx/bg.png';
+	newImage.onload=function(){
+		$('#loading').hide();
+	};
+
+	var isWx=true;
+
+    function isWeiXin(){
+        var ua = window.navigator.userAgent.toLowerCase();
+        if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            return true;
+            isWx=true;
+        }else{
+        	isWx=false;
+            return false;
+        }
+    }
+    isWeiXin()
+
+	$('.btncon a').tap(function(ev){
+		if(isWx){
+			$('.tips-open').show();
+			return false;
+		}
+	});
+
+	$('.tips-open .t-close').tap(function(ev){
+		ev.stopPropagation();
+		$('.tips-open').hide();
+	})
+
+	$('.popovermc').tap(function(ev){
+		ev.stopPropagation();
+	});
+
+	$('.popover').tap(function(ev){
+		$('.popover').hide();
+	});
+	
+</script>
+</body>
+</html>
