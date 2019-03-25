@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0;"
+name="viewport"/>
+<title>css3帧动画</title>
+<style>
+*{
+    padding:0;
+    margin:0; 
+    font-size:.26rem;   
+}
+.btn_start{position:relative; width:2.71rem;height:1.62rem;left:50%; -webkit-transform:translateX(-50%); transform:translateX(-50%);}
+.btn_start .i{
+	width:265px;
+	height:128px;
+	background: url(//dl.gamdream.com/activity/galan/wawaji/20190308/foot_2.png) no-repeat; 
+	background-size:100% auto;
+}
+.btn_start .img{
+	width:265px;
+	height:128px;
+	background: url(//dl.gamdream.com/activity/galan/wawaji/20190308/run.png) no-repeat;
+	background-size:100%;
+	animation:run steps(5) .6s infinite;   
+}
+@keyframes run{
+	100%{background-position:0 -640px;}
+}
+.nav_desc{
+  text-align: center;
+}
+</style>
+<script type="text/javascript">
+	function setResize(){
+		var devieWidth=Math.min(750,document.documentElement.clientWidth);
+		if(document.documentElement.clientHeight/document.documentElement.clientWidth > 1.78){
+			document.documentElement.classList.add('iphonex');
+		}
+		document.documentElement.style.fontSize=devieWidth/7.5+'px';
+	}
+	setResize()
+	window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function (e) {
+		setTimeout(function () {
+			setResize();
+		}, 200)
+	}, false);
+</script>
+</head>
+<body>
+<svg viewBox="0, 0, 265, 128" class="btn_start">
+  <foreignObject class="i" width="265" height="128">
+      <div class="img"></div>
+  </foreignObject>
+</svg>		
+<div class="nav_desc">活动介绍</div>
+</body>
+</html>
