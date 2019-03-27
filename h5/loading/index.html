@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="X-UA-Compatible" content="IE=Edge, chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<title>图片加载显示loading效果</title>
+	<link rel="stylesheet" href="./css/index.css">
+	<script type="text/javascript">
+		function setResize() {
+			var devieWidth = Math.min(750, document.documentElement.clientWidth, document.documentElement.clientHeight);
+			var fonSize = devieWidth > 1080 ? 144 : devieWidth / 7.5;
+			document.documentElement.style.fontSize = fonSize + 'px';
+		}
+		setResize()
+		window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function (e) {
+			setTimeout(function () {
+				//setResize();
+			}, 200)
+		}, false);
+	</script>
+</head>
+
+<body>
+	<div class="loading" id="loading">
+		<div class="progress">
+			<div class="bar">
+				<div class="inner" id="progress-bar"></div>
+			</div>
+		</div>
+		<div class="loading-text" data-rp="4"></div>
+	</div>
+	<ul class="pages" id="pages">
+		<li><img src="../picload/images/1.jpg" /></li>
+		<li><img src="../picload/images/2.jpg" /></li>
+	</ul>
+	<script>
+		var PreLoad = function (a, b) {
+			var c = b || {};
+			this.source = a;
+			this.count = 0;
+			this.total = a.length;
+			this.onload = c.onload;
+			this.prefix = c.prefix || "";
+			this.init()
+		};
+		PreLoad.prototype.init = function () {
+			var a = this;
+			a.source.forEach(function (b) {
+				var c = b.replace(/[#\?].*$/, '').substr(b.lastIndexOf(".") + 1).toLowerCase(),
+					d = a.prefix + b;
+				switch (c) {
+					case "js":
+						a.script.call(a, d);
+						break;
+					case "css":
+						a.stylesheet.call(a, d);
+						break;
+					case "svg":
+					case "jpg":
+					case "gif":
+					case "png":
+					case "jpeg":
+						a.image.call(a, d)
+				}
+			})
+		}
+		PreLoad.prototype.getProgress = function () {
+			return Math.round(this.count / this.total * 100)
+		}
+		PreLoad.prototype.image = function (a) {
+			var b = document.createElement("img");
+			this.load(b, a), b.src = a
+		}
+		PreLoad.prototype.stylesheet = function (a) {
+			var b = document.createElement("link");
+			this.load(b, a), b.rel = "stylesheet", b.type = "text/css", b.href = a, document.head.appendChild(b)
+		}
+		PreLoad.prototype.script = function (a) {
+			var b = document.createElement("script");
+			this.load(b, a), b.type = "text/javascript", b.src = a, document.head.appendChild(b)
+		}
+		PreLoad.prototype.load = function (a, b) {
+			var c = this;
+			a.onload = a.onerror = a.onabort = function (a) {
+				c.onload && c.onload({
+					count: ++c.count,
+					total: c.total
+				})
+			}
+		}
+
+		var resources = [
+			'../zepto.min.js',
+			'../vconsole.js',
+			'../picload/images/1.jpg',
+			'../picload/images/2.jpg',
+			'//dl.gamdream.com/activity/galan/luren/images/index_bg_01.jpg',
+			'//dl.gamdream.com/activity/galan/luren/images/index_bg_02.jpg',
+			'//dl.gamdream.com/activity/galan/luren/images/index_bg_03.jpg',
+		]
+		new PreLoad(resources, {
+			onload: function (load) {
+				var count = load.count,
+					total = load.total,
+					percent = Math.ceil(100 * count / total);
+
+				document.querySelector('#progress-bar').style.width = percent + '%'
+
+				if (count == total) {
+					var el = document.querySelector('#loading')
+					$(el).one('webkitAnimationEnd animationEnd', function () {
+						this.parentNode.removeChild(this)
+					})
+					//$('#pages').html($('#tmpl').html())
+					//$('#tmpl').remove()
+
+					$('#pages').show();
+					$(el).addClass('complete')
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>

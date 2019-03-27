@@ -1,0 +1,94 @@
+/*loading样式*/
+.loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 100;
+  background-color: #383231;
+}
+
+.loading .progress {
+  position: absolute;
+  width: 3.4rem;
+  height: .22rem;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border: .04rem solid #eeefef;
+  border-radius: .06rem;
+}
+
+.loading .progress .bar {
+  position: absolute;
+  top: -.02rem;
+  left: -.02rem;
+  width: 3.42rem;
+  height: .28rem;
+}
+
+.loading .progress .bar .inner {
+  width: 0%;
+  height: 100%;
+  background-color: #eeefef;
+}
+
+.loading .loading-text {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  margin-top: .4rem;
+  position: absolute;
+  width: 1.15rem;
+  height: .14rem;
+  background: url('../images/loading-text.png') no-repeat;
+  background-size: 100%;
+}
+
+@-webkit-keyframes loading-ani {
+  0% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes loading-ani {
+  0% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+}
+
+.loading.complete {
+  -webkit-animation: loading-ani 0.5s both;
+  animation: loading-ani 0.5s both;
+}
+
+/*其他样式*/
+.pages{
+  display: none;
+}
+img{
+  max-width: 100%;
+}
+li{list-style:none;margin:0;}
