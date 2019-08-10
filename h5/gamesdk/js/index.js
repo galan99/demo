@@ -9,7 +9,7 @@ if (location.href.indexOf('vconsole') != -1) {
 var PageSdK = function (window, document) {
     var nav = navigator.userAgent.toLowerCase(),
         gameInfo = {},
-        mainlink = 'https://www.easy-mock.com/mock/5d3a61f8d3848402c9e482f1/hezi',
+        mainlink = '',
         _stop = true;
 
     return {
@@ -19,9 +19,9 @@ var PageSdK = function (window, document) {
         isPc: !/phone|pad|ipod|ios|ipad|android|mobile|blackberry|iemobile|mqqbrowser|juc|fennec|wosbrowser|browserng|webos|symbian|windows phone/i.test(nav),
         gameUrl: '',
         loginUrl: '',
-        payUrl: '/game/create-order',
-        dataUrl: '/game/play-for-ajax', //本地 http://yapi.demo.qunar.com/mock/85778/game/play-for-ajax',
-        getShopUrl: '/game/get-product-info', //本地http://yapi.demo.qunar.com/mock/85778/game/get-product-info',
+        payUrl: './data/pay.json',
+        dataUrl: './data/index.json',
+        getShopUrl: './data/pay.json',
         onMsg: function (msg) {
             if ($("#cmTips").length) {
                 clearTimeout(_timer);
@@ -111,7 +111,7 @@ var PageSdK = function (window, document) {
             }
             setTimeout(function(){
                 _this.popHtml()
-            }, 1e4)             
+            }, 6e3)             
             this.load()
             this.events()
             this.getData()

@@ -1,0 +1,16 @@
+{
+  "msg": "success",
+  "error_code": "0",
+  "data": {
+    "product_info": {
+      "price": "6.00",
+      "name": "普通元宝充值"
+    },
+    "payment_method": {
+      "wx": 1006,
+      "ali": 1007
+    }
+  },
+  "reqId": "201908101813495d4e98dd93014348",
+  "ts": 1565432029
+}

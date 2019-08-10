@@ -1,0 +1,15 @@
+{
+  "msg": "success",
+  "error_code": "0",
+  "data": {
+    "login_url": "",
+    "game_url": "http://game.webxinxin.com/fubag/",
+    "is_login": "1",
+    "user_info": {
+      "nickname": "再浪一次",
+      "avatar": "http://dl.gamdream.com/bbs/attachment/album/201701/17/38_148465724918423869315.jpg"
+    }
+  },
+  "reqId": "201908101801115d4e95e78590f303",
+  "ts": 1565431271
+}
