@@ -111,7 +111,7 @@ var PageSdK = function (window, document) {
             }
             setTimeout(function(){
                 _this.popHtml()
-            }, 6e3)             
+            }, 4e3)             
             this.load()
             this.events()
             this.getData()
