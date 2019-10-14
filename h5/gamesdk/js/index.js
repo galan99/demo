@@ -1,7 +1,8 @@
 /** 
 @author:anlan
-@date:2019-07-09
+@date:2019-10-14
 h5游戏支付
+线上：http://dl.gamdream.com/activity/galan/gamesdk/js/game.js
 */
 if (location.href.indexOf('vconsole') != -1) {
     document.write('<script src="//dl.gamdream.com/activity/lib/vconsole.js"></script>')
@@ -213,7 +214,11 @@ var PageSdK = function (window, document) {
                 $('#loading').hide();
                 if (data.error_code == 0) {
                     if (type === 'wx') {
-                        startJsApiCall(data.data.payment_info);
+                        if (window.__wxjs_environment !== 'miniprogram') {
+                            startJsApiCall(data.data.payment_info)
+                        } else {
+                            miniwxpay(data.data.payment_info)
+                        }
                     } else {
                         sessionStorage.setItem('payUrl', data.data.payment_info.payment_url);
                         window.location.href = data.data.payment_info.payment_url;
@@ -222,6 +227,13 @@ var PageSdK = function (window, document) {
                     _this.onMsg(data.msg);
                 }
             });
+
+            function miniwxpay(parms){
+                console.log('微信小程序支付')
+                var url = '/pages/pay/pay?timeStamp='+ parms.timeStamp + '&nonceStr=' + parms.nonceStr + '&package=' + encodeURIComponent(parms.package) + '&paySign=' + parms.paySign
+                console.log(url)
+                wx.miniProgram.navigateTo({url: url})
+            }
 
             function jsApiCall(parms) {
                 WeixinJSBridge.invoke(
