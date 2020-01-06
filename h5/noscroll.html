@@ -102,7 +102,7 @@ name="viewport"/>
 
     window.onload=function(){
         var con=document.querySelector('.content');
-        var btn=document.querySelector('.btn');
+        var btn=document.querySelectorAll('.btn');
         var mask=document.querySelector('.mask');
         con.innerHTML=document.querySelector('.text').innerHTML;
 
@@ -111,7 +111,13 @@ name="viewport"/>
             $('.mask,.content').hide();        
         };
 
-        btn.onclick=function(e){
+        for(var i = 0; i< btn.length; i++){
+            btn[i].onclick = function(e){
+                clickFn(e)
+            }
+        }
+
+        function clickFn(e){
             $('.mask,.content').show();
 
             //针对弹窗内文本的滚动
